@@ -4,12 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Hey, bin ein Software Entwickler, der im Raum Karlsruhe arbeitet. Ich möchte hier mit diesem Blog Themen aus dem Bereich Web-Entwicklung sowie UX behandeln, da das meine Interessensfelder darstellen. 
 
-### More Information
+### Wo bin ich noch aktiv?
 
-A place to include any other types of information that you'd like to include about yourself. 
-
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+- [Delicious](http://www.delicious.com/doppelmutzi)
+- [Twitter @doppelmutzi](https://twitter.com/doppelmutzi)
