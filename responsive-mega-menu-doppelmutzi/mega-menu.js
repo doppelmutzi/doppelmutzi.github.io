@@ -1,5 +1,12 @@
 $(document).ready(function() {
 
+    $('body').restive({
+      breakpoints: ['767', '960', '1280'],
+      classes: ['rp_767', 'rp_960', 'rp_1280'],
+      turbo_classes: 'is_mobile=mobile,is_phone=phone,is_tablet=tablet,is_non_mobile=non_mobile,is_portrait=view-p,is_landscape=view-l',
+      force_dip: true         
+    });
+
     // for mobile navigation
     var currentVisibleLevel;
     var LEVEL2 = 2;
