@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
     $('body').restive({
-      breakpoints: ['767', '960', '1280'],
-      classes: ['rp_767', 'rp_960', 'rp_1280'],
-      turbo_classes: 'is_mobile=mobile,is_phone=phone,is_tablet=tablet,is_non_mobile=non_mobile,is_portrait=view-p,is_landscape=view-l',
+      breakpoints: ['767', '10000'],
+      classes: ['css_767', 'css_1440'],
+      turbo_classes: 'is_mobile=mobile,is_phone=phone,is_tablet=tablet,is_non_mobile=non-mobile,is_portrait=view-p,is_landscape=view-l',
       force_dip: true         
     });
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 		$(".nav-top-level-item").click(function() {  				
       console.debug(".nav-top-level-item clicked");
-			if (isMobile()) {
+			if (isMobileContext()) {
         navigateFrom1stLevelTo2ndLevel($(this));
         if ($( this ).hasClass("is-active")) {
 					console.debug("1st level item is active, 2nd level items are visible");
@@ -32,8 +32,8 @@ $(document).ready(function() {
   		$( this ).toggleClass( "is-active" );
 		});  
 
-		if (isDesktop()) {
-			console.debug("I'm desktop");
+		if (isDesktopContext()) {
+			console.debug("use desktop context");
 			preventHiding2ndLevelContainerOnClick();	 
       registerMouseoverEventFor2ndLevelWrapper
       handleMouseEventsWhileHoveringOverSecundaryTeaser(); 				
@@ -43,7 +43,7 @@ $(document).ready(function() {
       register2ndLevelListItemsMouseover();
 		}
 		else {
-			console.debug("I'm mobile");
+			console.debug("Use mobile context");
 			registerClickEventBackButton();
 			registerEventsForBurgerButton();
       preventNormalURLHandlingOn2ndLevelListItemClick();
@@ -345,19 +345,16 @@ $(document).ready(function() {
         return $element.attr("class");
       }
 
-      /* 
-      returns true if we are in xs break point (mobile), else returns false (desktop)
-      */
-      function isMobile() {
-        // if burger nav is visible, then we are in mobile mode
-        if ($(".nav-top-level-burger").css("display") == "none" ) {
+      function isMobileContext() {
+        // check restive.js annotated classes
+        if ($("body").hasClass("css_1440")) {
           return false;
         }
         return true;
       }
 
-      function isDesktop() {
-        return !isMobile();
+      function isDesktopContext() {
+        return !isMobileContext();
       }
 
       // end
