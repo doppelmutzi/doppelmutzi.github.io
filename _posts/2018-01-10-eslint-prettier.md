@@ -76,6 +76,6 @@ It is a relatively young tool that just turned one year at the beginning of 2018
 
 Prettier can be [integrated](https://prettier.io/docs/en/editors.html) with many popular development environments, including [Sublime Text](https://www.sublimetext.com/), [Visual Studio Code](https://code.visualstudio.com/), or [Webstorm](https://www.jetbrains.com/webstorm/).
 
-Besides Prettier's CLI, there also exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
+A common use case is to use Prettier's [CLI](https://prettier.io/docs/en/cli.html) from [npm scripts](https://docs.npmjs.com/misc/scripts). There also exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
 
 # Using ESLint with Prettier
