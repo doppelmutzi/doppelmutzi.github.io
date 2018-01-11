@@ -3,7 +3,7 @@ layout: post
 title: Establishing an efficient Code Analyzing and Formatting Workflow (for Vue.js applications) with eslint and prettier
 ---
 
-Lately, I have been investigating quite some time into linting and formatting of Javascript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work tools like jshint, eslint, or prettier are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
+Lately, I have been investigating quite some time into linting and formatting of Javascript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like jshint, eslint, or prettier are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
 
 # eslint
 
@@ -66,6 +66,8 @@ ESLint picks up the file that is [located closest](https://eslint.org/docs/user-
 
 A great feature of ESLint is its autofixing capability. With the _--fix_ option on the command line, ESLint makes changes to the linted source code for fixable errors. As we see later, this feature can also be leveraged from IDEs on save that allows for a very pleasant frontend development workflow.
 
-Besides static code analyzing, ESLint also features code formatting capabilities. However, in corporation with Prettier this can lead to problems due to incompatible formatting configurations.
+Besides static code analyzing, ESLint also features code formatting capabilities. However, in corporation with Prettier this can lead to problems due to incompatible formatting configurations. As we see later, it is possible to disable all ESLint rules relating to code formatting and use Prettier for beautifying your code.
 
 # Prettier
+
+[Prettier](https://prettier.io/) is a zero-configuration code formatting utility by design. Its only purpose is to reformat source code but does this job well. It is a relatively young tool that just turned one year at the beginning of 2018. It supports JavaScript including [ES2017](http://2ality.com/2016/02/ecmascript-2017.html), [JSX](https://facebook.github.io/jsx/), [TypeScript](https://www.typescriptlang.org/), [Flow](https://flow.org/), but also [SCSS](http://sass-lang.com/), and more. Prettier can be [integrated](https://prettier.io/docs/en/editors.html) with many popular development environments, including [Sublime Text](https://www.sublimetext.com/), [Visual Studio Code](https://code.visualstudio.com/), or [Webstorm](https://www.jetbrains.com/webstorm/).
