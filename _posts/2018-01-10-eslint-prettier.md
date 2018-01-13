@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Establishing an efficient Code Analyzing and Formatting Workflow (for Vue.js applications) with eslint and prettier
+title: Establishing an efficient Code Analyzing and Formatting Workflow (for Vue.js) with ESLint and Prettier
 ---
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like jshint, eslint, or prettier are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
 
-# eslint
+# ESLint
 
 Jani Hartikainen [provides a good comparison](https://www.sitepoint.com/comparison-JavaScript-linting-tools/) of [JSLint](http://www.jslint.com/), [JSHint](http://jshint.com/), [JSCS](http://jscs.info/), and [ESLint](https://eslint.org/), which constitute JavaScript linting tools. In 2016, JSCS has merged with ESLint since both tools were solving similar problems.
 
@@ -76,6 +76,118 @@ It is a relatively young tool that just turned one year at the beginning of 2018
 
 Prettier can be [integrated](https://prettier.io/docs/en/editors.html) with many popular development environments, including [Sublime Text](https://www.sublimetext.com/), [Visual Studio Code](https://code.visualstudio.com/), or [Webstorm](https://www.jetbrains.com/webstorm/).
 
-A common use case is to use Prettier's [CLI](https://prettier.io/docs/en/cli.html) from [npm scripts](https://docs.npmjs.com/misc/scripts). In addition, there exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
+A common use case is to use Prettier's [CLI](https://prettier.io/docs/en/cli.html) from [npm scripts](https://docs.npmjs.com/misc/scripts). Therefore, you can install Prettier via npm.
+
+```bash
+yarn add prettier
+```
+
+In addition, there exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
 
 # Using ESLint with Prettier
+
+It would be great if Prettier and ESLint would work together hand in hand. And indeed, Prettier is built for [integration](https://prettier.io/docs/en/eslint.html) with ESLint. There exist [several ways](https://prettier.io/docs/en/related-projects.html) to achieve such an scenario. However, my concrete workflow intends to use ESLint for static code analysis only and to utilize Prettier for code formatting. Furthermore, I would like to auto-fix (if possible) detected programming errors along with derivations from coding conventions by ESLint as well as violations of formatting conventions by Prettier. This should be possible through running npm scripts manually or by commit hooks. But the most important requirement is to perform all this right in the IDE to hand when the developer performs a save. And all this should be also works with [Vue.js Single File Components](https://vuejs.org/v2/guide/single-file-components.html). In the following, I show you how this can be achieved.
+
+With ESLint and Prettier already installed, we need to further install a couple of npm packages:
+
+```bash
+yarn add --dev eslint-plugin-prettier eslint-config-prettier
+```
+
+The job of [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) is to turn off all ESLint rules that are unnecessary or might conflict with Prettier.
+
+With the help of the ESLint plugin [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier) we add Prettier as an ESLint rule.
+
+Consider the following _.eslintrc.\*_ file.
+
+```javascript
+module.exports = {
+  // https://github.com/prettier/eslint-config-prettier
+  extends: ["prettier"],
+  // https://github.com/prettier/eslint-plugin-prettier
+  plugins: ["prettier"],
+  rules: {
+    "prettier/prettier": "error"
+  }
+};
+```
+
+In the _extends_ array we utilize _eslint-config-prettier_ to disable all formatting rules provided by ESLint. With the entry to the _plugins_ array, we activate _eslint-plugin-prettier_ that makes the whole process possible: ESLint runs Prettier as an ESLint rule, reports differences as individual ESLint issues, and performs auto-fixing for fixable Prettier violations. With this setup in place, all [programming flaws](https://eslint.org/docs/rules/) are still detected by ESLint.
+
+The configuration above can also be written in a more [concise](https://github.com/prettier/eslint-plugin-prettier#recommended-configuration) way to achieve the same goal.
+
+```javascript
+module.exports = {
+  // https://github.com/prettier/eslint-config-prettier
+  extends: ["plugin:prettier/recommended"]
+};
+```
+
+Assuming that _eslint_ is installed as a local or global npm module, we can provide a _lint_ script for processing all JavaScript and Vue.js files in a _package.json_ file. With the script _lint-autofix_ fixable errors are resolved and written back to the source code file.
+
+```json
+{
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src test",
+    "lint-autofix": "eslint --ext .js,.vue src test --fix"
+  }
+}
+```
+
+With the current setup, _\*.vue_ files are not processed correctly yet, but we deal with this [later in this article](#vue).
+
+With the configuration of the previous _.eslintrc.js_ file, all ESLint rules relating to code formatting are disabled, and only rules that detect patterns in the AST are enabled. However, you might want to have one of the popular code formatting configurations in place, e.g., the config from [Airbnb](https://www.npmjs.com/package/eslint-config-airbnb) or for [JavaScript Standard Style](https://www.npmjs.com/package/eslint-config-standard). In combination with our setup, we have to use ESLint plugins that are [supported](https://github.com/prettier/eslint-config-prettier#installation) by _eslint-config-prettier_, e.g., [eslint-plugin-standard](https://github.com/xjamundx/eslint-plugin-standard) for aforementioned JavaScript Standard Style. In the _.eslintrc.\*_ file, _prettier/standard_ has to be added after _prettier_ to the _extends_ array.
+
+```javascript
+module.exports = {
+  // https://github.com/prettier/eslint-config-prettier
+  extends: ["prettier", "prettier/standard"],
+  // https://github.com/prettier/eslint-plugin-prettier
+  plugins: ["prettier"],
+  rules: {
+    "prettier/prettier": "error"
+  }
+};
+```
+
+Because of the wide range of possibilities to write _.eslintrc.\*_ files, it is not always obvious that the ESLint configuration contains rules that [conflict with Prettier](https://github.com/prettier/eslint-config-prettier#cli-helper-tool). _eslint-config-prettier_ is shipped with a CLI helper tool that checks for any of those problems. In our _package.json_ we add another script named _eslint-check_ to the end of the _scripts_ object.
+
+```bash
+{
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src test",
+    "lint-autofix": "eslint --ext .js,.vue src test --fix",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+  }
+}
+```
+
+# ESLint with Git hooks
+
+In order to improve the quality of the code base of a software development project, it might be helpful to use [Git hooks](https://git-scm.com/docs/githooks) to reduce defective code getting into remote repositories. In the following, we install [Husky](https://github.com/typicode/husky) that makes using Git hooks easy.
+
+```bash
+yarn add --dev husky
+```
+
+With _Husky_ in place, we can add Git hooks by [adding corresponding npm scripts](https://github.com/typicode/husky/blob/master/HOOKS.md) to _package.json_. With _&quot;precommit&quot;_ we can add a pre-commit hook that allows us to abort a Git commit if the npm script does return an exit code other than 0, which stands for &quot;successful&quot;.
+
+```json
+{
+  "scripts": {
+    "lint": "eslint --ext .js,.vue src test",
+    "lint-autofix": "eslint --ext .js,.vue src test --fix",
+    "eslint-check":
+      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "precommit": "npm run lint-check && npm run lint"
+  }
+}
+```
+
+In the previous example, the pre-commit hook prevents committing if the lint check or our actual linting script are not successful. This is a great option to improve development productivity. The next picture shows an example output of a failed _precommit_ script.
+
+![Example for a failed pre-commit hook](../images/precommit-error-husky.png)
+
+# Prettier with EditorConfig
+
+# <a name="vue"></a>Vue.js
