@@ -15,7 +15,7 @@ Linting rules can be defined within _.eslintrc.\*_ [configuration files](https:/
 
 The following snippet shows an _.eslintrc.js_ file that defines some custom rules with the _rules_ object.
 
-```JavaScript
+```javascript
 // http://eslint.org/docs/user-guide/configuring
 module.exports = {
   root: true,
