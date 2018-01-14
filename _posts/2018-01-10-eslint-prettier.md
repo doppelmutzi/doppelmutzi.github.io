@@ -5,6 +5,10 @@ title: Establishing an efficient Code Analyzing and Formatting Workflow (for Vue
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like jshint, eslint, or prettier are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
 
+# Improving Productivity with Linting and Formatting
+
+TODO
+
 # ESLint
 
 Jani Hartikainen [provides a good comparison](https://www.sitepoint.com/comparison-JavaScript-linting-tools/) of [JSLint](http://www.jslint.com/), [JSHint](http://jshint.com/), [JSCS](http://jscs.info/), and [ESLint](https://eslint.org/), which constitute JavaScript linting tools. In 2016, JSCS has merged with ESLint since both tools were solving similar problems.
@@ -190,4 +194,34 @@ In the previous example, the pre-commit hook prevents committing if the lint che
 
 # Prettier with EditorConfig
 
-# <a name="vue"></a>Vue.js
+What is [EditorConfig](http://editorconfig.org/)? It's a kind of &quot;de facto standard&quot; on formating styles across almost all relevant IDEs and development editors. The main feature is that _EditorConfig_ lets developers set file type specific whitespace rules automatically, across [virtually all editors](http://editorconfig.org/#download).
+
+This is a good thing in projects where developers have the freedom (and they should have) to choose their tools and editors. _EditorConfig_ addresses a common annoyance that developers introduce source code to version control with different line endings and spaces/tabs settings.
+
+That's where _EditorConfig_ comes into play. You just have to drop a _.editorconfig_ file into the root folder of your project and put it under version control. Thereby, written source code by anyone with varying editors and platforms will have the same indentation, encoding, and final newline config. Such a config file looks like the following.
+
+```
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+```
+
+The difference to Prettier is that _EditorConfig_ targets at a much more low level. It deals with programming independent text-related things, such as line endings, to use spaces or tabs, etc. _Prettier_, on the other hand, deals with questions like &quot;Should the starting curly brace of an if statement be on a new line or not?&quot; _EditorConfig_ and _Prettier_ are concerned with different but important things and, thus, should be used together.
+
+Since december 2017 Prettier has been [supporting EditorConfig](https://prettier.io/blog/2017/12/05/1.9.0.html). At time of this writing, _EditorConfig_ respects the following:
+
+* indent_style
+* indent_size/tab_width
+* max_line_length
+
+_Prettier_ considers a found _.editorconfig_ file on default. Opt-out is possible via CLI parameter _--no-editorconfig_. However, currently the API does not consider _.editorconfig_ on default but considering can be [opt-in](https://prettier.io/blog/2017/12/05/1.9.0.html#configuration) with _editorconfig: true_ in the _.prettierrc_ configuration file.
+
+# <a name="vue"></a>ESLint with Vue.js
+
+TODO
