@@ -276,4 +276,4 @@ Below, I show you how to setup [Visual Studio Code](https://code.visualstudio.co
 
 To get a good overview of this extension, you can [watch the presentation](https://www.youtube.com/watch?v=05tNXJ-Kric&t=1271s) of _Vetur_'s author Pin Wu held at the VueConf EU last September.
 
-<iframe width="560" height="420" src="https://www.youtube.com/watch?v=05tNXJ-Kric&t=1271s?color=white&theme=light"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/05tNXJ-Kric" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
