@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Establishing an efficient Code Analyzing and Formatting Workflow (for Vue.js) with ESLint and Prettier
+title: Efficient Code Analyzing and Formatting (for Vue.js) with ESLint and Prettier
 ---
 
-Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like jshint, eslint, or prettier are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
+Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
 
 # Improving Productivity with Linting and Formatting
 
@@ -257,5 +257,23 @@ With the _&quot;plugin:vue/recommended&quot;_ entry in the _extends_ array, a [V
 
 In addition to the configuration of a ruleset, _&quot;vue&quot;_ and _&quot;html&quot;_ is necessary for linting _\*.vue_ files.
 
-The next picture shows how that Vue.js-specific issues are reported by _ESLint_. In this example, the linter issues that property order within a Vue instance is not as recommended.
+The next picture shows how that Vue.js-specific issues are reported by _ESLint_ with our _npm script_ by running the following command.
+
+In this example, the linter issues that property order within a Vue instance is not as recommended.
 ![Example for a Vue.js linting errors](../images/vue-eslint-error.png)
+
+# Getting Everything to Work with Visual Studio Code
+
+Now, we have everything in place to use _ESLint_ with _Prettier_ and even with _\*.vue_ files on the terminal from _npm scripts_. We have a robust linting and formatting workflow running, which is also capable to auto-fix issues and can prevent committing in case of linting issues. Thereby we can achieve to have a clean code base in our SCCS.
+
+This is all good and well, but this workflow can be tedious if you have to have to invoke a npm script and wait for the result. Or even worse, you are in hurry, you have to go to get your train, and your commit is failing because of linting errors.
+
+Wouldn't it be better to get immediate response while typing source code in your editor? And wouldn't it be great to get your code auto-formatted on save for fixable issues? All this is possible with many popular editors.
+
+Below, I show you how to setup [Visual Studio Code](https://code.visualstudio.com/) to get all these things play nicely together. At the time of this writing, [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) is the best bet to add sophisticated _Vue.js_ support to _Visual Studio Code_.
+
+![Vetur adds sophisticated Vue.js support to Visual Studio Code](../images/vetur.png)
+
+To get a good overview of this extension, you can [watch the presentation](https://www.youtube.com/watch?v=05tNXJ-Kric&t=1271s) of _Vetur_'s author Pin Wu held at the VueConf EU last September.
+
+<iframe width="560" height="420" src="https://www.youtube.com/watch?v=05tNXJ-Kric&t=1271s?color=white&theme=light"></iframe>
