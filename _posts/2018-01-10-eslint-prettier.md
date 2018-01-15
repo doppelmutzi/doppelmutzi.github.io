@@ -210,9 +210,16 @@ indent_size = 2
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
+
+# 4 space indentation
+[*.py]
+indent_style = space
+indent_size = 4
 ```
 
-The difference to Prettier is that _EditorConfig_ targets at a much more low level. It deals with programming independent text-related things, such as line endings, to use spaces or tabs, etc. _Prettier_, on the other hand, deals with questions like &quot;Should the starting curly brace of an if statement be on a new line or not?&quot; _EditorConfig_ and _Prettier_ are concerned with different but important things and, thus, should be used together.
+A very useful feature is that is possible to define programming language independent rules but also language-specific rules like for _Python_ in the code snippet above.
+
+The difference to _Prettier_ is that _EditorConfig_ targets at a much more low level. It deals with programming independent text-related things, such as line endings, to use spaces or tabs, etc. _Prettier_, on the other hand, deals with questions like &quot;Should the starting curly brace of an if statement be on a new line or not?&quot; _EditorConfig_ and _Prettier_ are concerned with different but important things and, thus, should be used together.
 
 Since december 2017 Prettier has been [supporting EditorConfig](https://prettier.io/blog/2017/12/05/1.9.0.html). At time of this writing, _EditorConfig_ respects the following:
 
@@ -224,4 +231,31 @@ _Prettier_ considers a found _.editorconfig_ file on default. Opt-out is possibl
 
 # <a name="vue"></a>ESLint with Vue.js
 
-TODO
+Using _ESLint_ with Vue.js means to get it working with _\*.vue_ files. This can be achieved with the official Vue.js ESLint plugin [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue).
+
+The following _.eslintrc.js_ file shows how Vue.js integration can be achieved.
+
+```javascript
+module.exports = {
+  root: true,
+  parserOptions: {
+    sourceType: "module",
+    parser: "babel-eslint"
+  },
+  env: {
+    browser: true
+  },
+  extends: ["prettier", "prettier/standard", "plugin:vue/recommended"],
+  plugins: ["vue", "html", "prettier"],
+  rules: {
+    "prettier/prettier": "error"
+  }
+};
+```
+
+With the _&quot;plugin:vue/recommended&quot;_ entry in the _extends_ array, a [Vue.js ruleset](https://github.com/vuejs/eslint-plugin-vue#gear-configs) can be added. With this in place, [Vue.js specific rules](https://github.com/vuejs/eslint-plugin-vue#bulb-rules) are used, e.g., enforce valid _v-if_ directives.
+
+In addition to the configuration of a ruleset, _&quot;vue&quot;_ and _&quot;html&quot;_ is necessary for linting _\*.vue_ files.
+
+The next picture shows how that Vue.js-specific issues are reported by _ESLint_. In this example, the linter issues that property order within a Vue instance is not as recommended.
+![Example for a Vue.js linting errors](../images/vue-eslint-error.png)
