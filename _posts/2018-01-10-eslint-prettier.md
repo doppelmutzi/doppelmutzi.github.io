@@ -5,11 +5,19 @@ title: Efficient Code Analyzing and Formatting (for Vue.js) with ESLint and Pret
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and a diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust workflow that also works for different editors as well as from npm scripts.
 
-# Improving Productivity with Linting and Formatting
+# Automation is the Key &ndash; Improving Productivity
 
-TODO
+The talk of [Chris Heilman](https://twitter.com/codepo8) at [Beyond Tellerrand 2018 at Munich](https://beyondtellerrand.com/events/munich-2018/speakers/christian-heilmann#talk) has inspired me to emphasize what the motivation behind this article is all about. A main point of his talk was automating things in software projects.
 
-# ESLint
+Automation is also the key point of this article. Professional software projects with many stakeholders involved are complex. Time is most of the time a rare good and, thus, development teams should automate tedious, repeatable, error-prone, and boring tasks as much as possible. Thus, it's more time for the actual work (and interesting things).
+
+There are many parts in a software development project that should be automated. I do not cover all parts of it, e.g., the very important concept of automating tests is not part of this article. However, in the following I deal with automating static code analysis with the help of linters in order to find coding problems and inconsistencies as early as possible; it's best to find them at development time and try to fix them automatically. The same applies to automatic code formatting based on a common ruleset.
+
+# Part I &ndash; The Basics
+
+In this part I go into two very helpful tools to achieve both, finding coding problems and formatting code. If you already have an understanding of _ELint_ and _Prettier_ feel free to skip this part.
+
+## ESLint
 
 Jani Hartikainen [provides a good comparison](https://www.sitepoint.com/comparison-JavaScript-linting-tools/) of [JSLint](http://www.jslint.com/), [JSHint](http://jshint.com/), [JSCS](http://jscs.info/), and [ESLint](https://eslint.org/), which constitute JavaScript linting tools. In 2016, JSCS has merged with ESLint since both tools were solving similar problems.
 
@@ -72,7 +80,7 @@ A great feature of ESLint is its auto-fixing capability. With the _--fix_ option
 
 Besides static code analyzing, ESLint also features code formatting capabilities. However, in corporation with Prettier this can lead to problems due to contrary formatting configurations. But it is possible to disable all ESLint rules relating to code formatting and use Prettier only for beautifying your code.
 
-# Prettier
+## Prettier
 
 [Prettier](https://prettier.io/) is a zero-configuration code formatting utility by design. Its only purpose is to reformat source code; but Prettier does this job well. [The main goal](http://jlongster.com/A-Prettier-Formatter) of Prettier is to remove all the distractions of writing code by allowing the developer writing code as he likes. Prettier instantly formats the code correctly on save.
 
@@ -88,7 +96,11 @@ yarn add prettier
 
 In addition, there exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
 
-# Using ESLint with Prettier
+# Part II &ndash; Bringing the Tools Together
+
+In this part I show you that _ESlint_ and _Prettier_ are perfect match. However, there are a few things to do in order to utilize them together.
+
+## Using ESLint with Prettier
 
 It would be great if Prettier and ESLint would work together hand in hand. And indeed, Prettier is built for [integration](https://prettier.io/docs/en/eslint.html) with ESLint. There exist [several ways](https://prettier.io/docs/en/related-projects.html) to achieve such an scenario. However, my concrete workflow intends to use ESLint for static code analysis only and to utilize Prettier for code formatting. Furthermore, I would like to auto-fix (if possible) detected programming errors along with derivations from coding conventions by ESLint as well as violations of formatting conventions by Prettier. This should be possible through running npm scripts manually or by commit hooks. But the most important requirement is to perform all this right in the IDE to hand when the developer performs a save. And all this should be also works with [Vue.js Single File Components](https://vuejs.org/v2/guide/single-file-components.html). In the following, I show you how this can be achieved.
 
@@ -166,7 +178,7 @@ Because of the wide range of possibilities to write _.eslintrc.\*_ files, it is 
 }
 ```
 
-# ESLint with Git hooks
+## ESLint with Git hooks
 
 In order to improve the quality of the code base of a software development project, it might be helpful to use [Git hooks](https://git-scm.com/docs/githooks) to reduce defective code getting into remote repositories. In the following, we install [Husky](https://github.com/typicode/husky) that makes using Git hooks easy.
 
@@ -192,7 +204,7 @@ In the previous example, the pre-commit hook prevents committing if the lint che
 
 ![Example for a failed pre-commit hook](../images/precommit-error-husky.png)
 
-# Prettier with EditorConfig
+## Prettier with EditorConfig
 
 What is [EditorConfig](http://editorconfig.org/)? It's a kind of &quot;de facto standard&quot; on formating styles across almost all relevant IDEs and development editors. The main feature is that _EditorConfig_ lets developers set file type specific whitespace rules automatically, across [virtually all editors](http://editorconfig.org/#download).
 
@@ -229,7 +241,7 @@ Since december 2017 Prettier has been [supporting EditorConfig](https://prettier
 
 _Prettier_ considers a found _.editorconfig_ file on default. Opt-out is possible via CLI parameter _--no-editorconfig_. However, currently the API does not consider _.editorconfig_ on default but considering can be [opt-in](https://prettier.io/blog/2017/12/05/1.9.0.html#configuration) with _editorconfig: true_ in the _.prettierrc_ configuration file.
 
-# <a name="vue"></a>ESLint with Vue.js
+## <a name="vue"></a>ESLint with Vue.js
 
 Using _ESLint_ with Vue.js means to get it working with _\*.vue_ files. This can be achieved with the official Vue.js ESLint plugin [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue).
 
@@ -262,7 +274,13 @@ The next picture shows how that Vue.js-specific issues are reported by _ESLint_ 
 In this example, the linter issues that property order within a Vue instance is not as recommended.
 ![Example for a Vue.js linting errors](../images/vue-eslint-error.png)
 
-# Getting Everything to Work with Visual Studio Code
+# Part III &ndash; Getting Everything to Work in Your IDE
+
+After the tooling is up and running, in this part I go into detail on how to setup coding editors to get the most out of a _ESLint_ and _Prettier_ workflow. I don't cover many editors but I choose Visual Studio Code and IntelliJ because I use these popular tools at work and I find both very handy. I haven't tried it but this workflow should be also possible with [Atom])(https://atom.io/) or [Sublime Text](https://www.sublimetext.com/).
+
+The main point here is that integration into your programming editor extends the workflow described in part II. There, the workflow has to be invoked from npm scripts; the developer is informed about problems not immediate when he is typing code. Though, editor integration offers the opportunity to perform linting and formatting on typing and saving, respectively. Thereby, the workflow is feasible and leads to a much higher development user experience.
+
+## Visual Studio Code
 
 Now, we have everything in place to use _ESLint_ with _Prettier_ and even with _\*.vue_ files on the terminal from _npm scripts_. We have a robust linting and formatting workflow running, which is also capable to auto-fix issues and can prevent committing in case of linting issues. Thereby we can achieve to have a clean code base in our SCCS.
 
@@ -277,3 +295,36 @@ Below, I show you how to setup [Visual Studio Code](https://code.visualstudio.co
 To get a good overview of this extension, you can [watch the presentation](https://www.youtube.com/watch?v=05tNXJ-Kric&t=1271s) of _Vetur_'s author Pin Wu held at the VueConf EU last September.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/05tNXJ-Kric" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+In addition, you need to install the [Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) as well as the [ESLint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint). Just search in the extension section for the keywords _ESLint_ and _Prettier_ and make sure to install the correct ones, from Dirk Baeumer and Esben Petersen, respectively.
+
+Go to Code > Preferences > Settings and setup _Vetur_ to work with _ESlint_ and _Prettier_. The following snippet shows an extract of the relevant party of the user settings. Consider that the following is a combination of default values and adjusted values and might change with more recent versions of the involved extensions. The configuration below should help you to setup your _Vetur_ extension to work as expected. There are much more configuration properties, just search for &quot;eslint&quot;, &quot;prettier&quot; or &quot;vetur&quot; to see all configuration options.
+
+```json
+{
+  /* ... other options skipped */
+  "eslint.enable": true,
+  "editor.formatOnSave": true,
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "vue-html"],
+  "eslint.run": "onType",
+  "eslint.autoFixOnSave": true,
+  "vetur.format.defaultFormatter.js": "prettier",
+  "vetur.format.defaultFormatter.css": "prettier",
+  // relevant for 'prettier-eslint' instead of 'prettier'
+  "prettier.eslintIntegration": false,
+  "vetur.format.defaultFormatter.css": "prettier",
+  "vetur.format.defaultFormatter.less": "prettier",
+  "vetur.format.defaultFormatter.postcss": "prettier",
+  "vetur.format.defaultFormatter.scss": "prettier",
+  // at the time of this writing there is no stylus support by prettier
+  "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+  "vetur.format.defaultFormatter.ts": "prettier",
+  "vetur.validation.style": true,
+  // Validate vue-html in <template> using eslint-plugin-vue
+  "vetur.validation.template": true
+}
+```
+
+In the setup above, automated fixing on save (_&quot;eslint.autoFixOnSave&quot;: true_) is activated. Due to the other options, _Prettier_ is utilized as auto-fixing mechanism. Additionally, with _&quot;eslint.run&quot;: &quot;true&quot;_ you as a developer get immediate editor response from _ESLint_ while typing. The last option above is important to get all this working with _\*.vue_ files.
+
+## IntelliJ
