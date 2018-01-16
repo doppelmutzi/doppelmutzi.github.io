@@ -276,7 +276,7 @@ In this example, the linter issues that property order within a Vue instance is 
 
 # Part III &ndash; Getting Everything to Work in Your IDE
 
-After the tooling is up and running, in this part I go into detail on how to setup coding editors to get the most out of a _ESLint_ and _Prettier_ workflow. I don't cover many editors but I choose Visual Studio Code and IntelliJ because I use these popular tools at work and I find both very handy. I haven't tried it but this workflow should be also possible with [Atom])(https://atom.io/) or [Sublime Text](https://www.sublimetext.com/).
+After the tooling is up and running, in this part I go into detail on how to setup coding editors to get the most out of a _ESLint_ and _Prettier_ workflow. I don't cover many editors but I choose Visual Studio Code and IntelliJ because I use these popular tools at work and I find both very handy. I haven't tried it but this workflow should be also possible with [Atom](https://atom.io/) or [Sublime Text](https://www.sublimetext.com/).
 
 The main point here is that integration into your programming editor extends the workflow described in part II. There, the workflow has to be invoked from npm scripts; the developer is informed about problems not immediate when he is typing code. Though, editor integration offers the opportunity to perform linting and formatting on typing and saving, respectively. Thereby, the workflow is feasible and leads to a much higher development user experience.
 
