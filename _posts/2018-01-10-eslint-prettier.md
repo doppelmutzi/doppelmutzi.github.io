@@ -9,11 +9,15 @@ Lately, I have been investigating quite some time into linting and formatting of
 
 The talk of [Chris Heilman](https://twitter.com/codepo8) at [Beyond Tellerrand 2018 at Munich](https://beyondtellerrand.com/events/munich-2018/speakers/christian-heilmann#talk) has inspired me to emphasize what the motivation behind this article is all about. A main point of his talk was automating things in software projects.
 
-Automation is also the key point of this article. Professional software projects with many stakeholders involved are complex. Time is most of the time a rare good and, thus, development teams should automate tedious, repeatable, error-prone, and boring tasks as much as possible. Thus, it's more time for the actual work (and interesting things).
+Automation and early feedback are the two key points of this article. Professional software projects with many stakeholders involved are complex. Time is mostly a rare good and, thus, development teams should automate tedious, repeatable, error-prone, and boring tasks as much as possible. Thus, it's more time for the actual work (and interesting things).
 
-There are many parts in a software development project that should be automated. I do not cover all parts of it, e.g., the very important concept of automating tests is not part of this article. However, in the following I deal with automating static code analysis with the help of linters in order to find coding problems and inconsistencies as early as possible; it's best to find them at development time and try to fix them automatically. The same applies to automatic code formatting based on a common ruleset.
+There are many parts in a software development project that should be automated. I do not cover all parts of it, e.g., the crucial concept of automated tests is not part of this article. However, in the following I deal with automating static code analysis with the help of linters in order to find coding problems and inconsistencies as early as possible; it's best to find them at development time and try to fix them automatically. The same applies to automatic code formatting based on a common ruleset.
 
-# Part I &ndash; The Basics
+# Agenda
+
+If you are already familiar with _ESLint_ and _Prettier_ you can skip [Part I](#part1). Jump to [Part II](#part2) if you are interested in setting up _ESLint_ and _Prettier_ to work together. This part also covers how to set this up for _Vue.js_. Skip to [Part III](#part3) if you want to know how you can use all this (especially with auto-fix on save) in _Visual Studio Code_ and _IntelliJ_.
+
+# <a name="part1"></a>Part I &ndash; The Basics
 
 In this part I go into two very helpful tools to achieve both, finding coding problems and formatting code. If you already have an understanding of _ELint_ and _Prettier_ feel free to skip this part.
 
@@ -96,7 +100,7 @@ yarn add prettier
 
 In addition, there exists JavaScript [API](https://prettier.io/docs/en/api.html) support.
 
-# Part II &ndash; Bringing the Tools Together
+# <a name="part2"></a>Part II &ndash; Bringing the Tools Together
 
 In this part I show you that _ESlint_ and _Prettier_ are perfect match. However, there are a few things to do in order to utilize them together.
 
@@ -274,7 +278,7 @@ The next picture shows how that Vue.js-specific issues are reported by _ESLint_ 
 In this example, the linter issues that property order within a Vue instance is not as recommended.
 ![Example for a Vue.js linting errors](../images/vue-eslint-error.png)
 
-# Part III &ndash; Getting Everything to Work in Your IDE
+# <a name="part3"></a> Part III &ndash; Getting Everything to Work in Your IDE
 
 After the tooling is up and running, in this part I go into detail on how to setup coding editors to get the most out of a _ESLint_ and _Prettier_ workflow. I don't cover many editors but I choose Visual Studio Code and IntelliJ because I use these popular tools at work and I find both very handy. I haven't tried it but this workflow should be also possible with [Atom](https://atom.io/) or [Sublime Text](https://www.sublimetext.com/).
 
@@ -329,8 +333,28 @@ In the setup above, automated fixing on save (_&quot;eslint.autoFixOnSave&quot;:
 
 Next, you see how this looks in your source code file.
 
-![Linted *.vue file with Prettier and Vue.js-specific ESLint issues](../images/vue-file-linted.png)
+![Linted file within Visual Studio Code with Prettier and Vue.js-specific ESLint issues](../images/vcode-file-linted.png)
 
 The first issue is a formatting problem that can be auto-fixed by just saving the file. Pretty convenient, isn't it? The second error is issued by _eslint-plugin-vue_. Because we put _&quot;plugin:vue/recommended&quot;_ into the _extends_ array, _ESLint_ let us know about a property ordering violation. In this example, _components_ should be placed before _template_ &ndash; this issue cannot be auto-fixed by _ESLint_.
 
 ## IntelliJ
+
+In order to use _ESLint_ with IntelliJ you need to install the [_ESLint_ plugin](https://plugins.jetbrains.com/plugin/7494-eslint). After that to enable it, you have to go to _Preferences | Languages & Frameworks | JavaScript | Code quality tools | ESLint_ and activate it. Then, issues in _*.js_ and _*.vue_ files should be reported by the _ESLint_ plugin.
+
+![Linted file within IntelliJ with Prettier and Vue.js-specific ESLint issues](../images/IntelliJ-linted.png)
+
+With the setup described in [Part II of this article](#part2)that should be all that is needed; except auto-fixing of issues. As [described by Jetbrains](https://blog.jetbrains.com/webstorm/2016/08/using-external-tools/), one possibility to make this feature (nearly) possible is to utilize a _IntelliJ_ feature called _External tools_. With that you can run a terminal command on a keyboard shortcut (but at time of this writing [not on save](https://intellij-support.jetbrains.com/hc/en-us/community/posts/205798649-Run-External-tool-on-filesave)). In our case, we want to run a command like our above defined _npm script_ called _&quot;lint-autofix&quot_. Therefore, go to _Preferences | Tools | External tools_ and add a new tool called &quot;ESLint auto-fix&quot;.
+
+In case you have a local installation of _ESLint_ you have to point to _node_modules/.bin/eslint_ in the _Programs_ input field. In the _Parameters_ input field we can use a _IntelliJ variable_ to point to the path of the currently edited file: _--ext .js,.vue --fix $FilePath$_.
+
+![Setting up an external tool to run ESLint](../images/IntelliJ-external-tool.png)
+
+With that, you can test your custom _external tool_ and run it by finding our action _&quot;ESLint auto-fix&quot;_ by pressing _CMD-Shift-A_.
+
+![Running the custom IntelliJ external tool](../images/IntelliJ-run-autofix.png)
+
+After hitting enter, the script is executed and the first issue is auto-fixed. Of course, the second warning goes away after changing the order correctly.
+
+# Final Thoughts
+
+Linting and formatting are two very important concepts to improve code quality. Especially if both are run automatically while you are writing your code. Early feedback is important &ndash; finding issues later in the software development pipeline (e.g., through [SonarQube](https://sonarqube.org) that also performs a static code analysis of your code after pushing it to a repo) can be annoying and maybe harder to fix. Thus, the barrier to deal with the issue right away is much lower if you get immediately informed about issues while you work on your code. In addition, tedious and boring things like manually formatting code according to some project guidelines are most likely ignored. That's why automatic auto-fixing is crucial.
