@@ -327,4 +327,10 @@ Go to Code > Preferences > Settings and setup _Vetur_ to work with _ESlint_ and 
 
 In the setup above, automated fixing on save (_&quot;eslint.autoFixOnSave&quot;: true_) is activated. Due to the other options, _Prettier_ is utilized as auto-fixing mechanism. Additionally, with _&quot;eslint.run&quot;: &quot;true&quot;_ you as a developer get immediate editor response from _ESLint_ while typing. The last option above is important to get all this working with _\*.vue_ files.
 
+Next, you see how this looks in your source code file.
+
+![Linted *.vue file with Prettier and Vue.js-specific ESLint issues](../images/vue-file-linted.png)
+
+The first issue is a formatting problem that can be auto-fixed by just saving the file. Pretty convenient, isn't it? The second error is issued by _eslint-plugin-vue_. Because we put _&quot;plugin:vue/recommended&quot;_ into the _extends_ array, _ESLint_ let us know about a property ordering violation. In this example, _components_ should be placed before _template_ &ndash; this issue cannot be auto-fixed by _ESLint_.
+
 ## IntelliJ
