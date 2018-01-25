@@ -4,9 +4,9 @@ title: About
 permalink: /about/
 ---
 
-Hey, bin ein Software Entwickler, der im Raum Karlsruhe arbeitet. Ich möchte hier mit diesem Blog Themen aus dem Bereich Web-Entwicklung sowie UX behandeln, da das meine Interessensfelder darstellen. 
+Hey, I'm a frontend developer that works for [diva-e Netpioneer GmbH](https://www.diva-e.com/?company=netpioneer) in Karlsruhe, Germany. I have been developing CSS for a very long time. Recently, I have been started to investigate and learn more about the JavaScript world. I like especially Vue.js.
 
-### Wo bin ich noch aktiv?
+### Some Links
 
-- [Delicious](http://www.delicious.com/doppelmutzi)
-- [Twitter @doppelmutzi](https://twitter.com/doppelmutzi)
+* [Twitter @doppelmutzi](https://twitter.com/doppelmutzi)
+* [Diigo](https://www.diigo.com/user/doppelmutzi)
