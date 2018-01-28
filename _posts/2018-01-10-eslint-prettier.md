@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Efficient Code Analyzing and Formatting (for Vue.js) with ESLint and Prettier
+date: 2018-01-28
+categories: JavaScript
 ---
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust development workflow that works from within different editors as well as from npm scripts.
