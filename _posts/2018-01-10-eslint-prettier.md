@@ -1,9 +1,13 @@
 ---
 layout: post
 title: Efficient Code Analyzing and Formatting (for Vue.js) with ESLint and Prettier
+slug: efficient-eslint-prettier-vue-workflow
 date: 2018-01-28
 categories: JavaScript
-crosspost_to_medium: true
+medium:
+- eslint
+- prettier
+- vue.js
 ---
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust development workflow that works from within different editors as well as from npm scripts.
@@ -177,7 +181,7 @@ Because of the wide range of possibilities to write _.eslintrc.\*_ files, it is 
   "scripts": {
     "lint": "eslint --ext .js,.vue src test",
     "lint-autofix": "eslint --ext .js,.vue src test --fix",
-    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+    "eslint-check": "eslint --print-config .eslintrc.js &gt; eslint-config-prettier-check"
   }
 }
 ```
@@ -198,7 +202,7 @@ With _Husky_ in place, we can add Git hooks by [adding corresponding npm scripts
     "lint": "eslint --ext .js,.vue src test",
     "lint-autofix": "eslint --ext .js,.vue src test --fix",
     "eslint-check":
-      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+      "eslint --print-config .eslintrc.js &gt; eslint-config-prettier-check",
     "precommit": "npm run lint-check && npm run lint"
   }
 }
@@ -339,11 +343,11 @@ The first issue is a formatting problem that can be auto-fixed by just saving th
 
 ## IntelliJ
 
-In order to use _ESLint_ with _IntelliJ_ you need to install the [ESLint plugin](https://plugins.jetbrains.com/plugin/7494-eslint). After that to enable it, you have to go to _Preferences | Languages & Frameworks | JavaScript | Code quality tools | ESLint_ and activate it. Then, issues in _\*.js_ and _\*.vue_ files should be reported by the _ESLint_ plugin.
+In order to use _ESLint_ with _IntelliJ_ you need to install the [ESLint plugin](https://plugins.jetbrains.com/plugin/7494-eslint). After that to enable it, you have to go to _Preferences &gt; Languages & Frameworks &gt; JavaScript &gt; Code quality tools &gt; ESLint_ and activate it. Then, issues in _\*.js_ and _\*.vue_ files should be reported by the _ESLint_ plugin.
 
 ![Linted file within IntelliJ with Prettier and Vue.js-specific ESLint issues](../images/IntelliJ-linted.png)
 
-With the setup described in [Part II of this article](#part2)that should be all that is needed; except auto-fixing of issues. As [described by Jetbrains](https://blog.jetbrains.com/webstorm/2016/08/using-external-tools/), one possibility to make this feature (nearly) possible is to utilize a _IntelliJ_ feature called _External tools_. With that you can run a terminal command on a keyboard shortcut (but at time of this writing [not on save](https://intellij-support.jetbrains.com/hc/en-us/community/posts/205798649-Run-External-tool-on-filesave)). In our case, we want to run a command like our above defined _npm script_ called _&quot;lint-autofix&quot_. Therefore, go to _Preferences | Tools | External tools_ and add a new tool called &quot;ESLint auto-fix&quot;.
+With the setup described in [Part II of this article](#part2)that should be all that is needed; except auto-fixing of issues. As [described by Jetbrains](https://blog.jetbrains.com/webstorm/2016/08/using-external-tools/), one possibility to make this feature (nearly) possible is to utilize a _IntelliJ_ feature called _External tools_. With that you can run a terminal command on a keyboard shortcut (but at time of this writing [not on save](https://intellij-support.jetbrains.com/hc/en-us/community/posts/205798649-Run-External-tool-on-filesave)). In our case, we want to run a command like our above defined _npm script_ called _&quot;lint-autofix&quot_. Therefore, go to _Preferences &gt; Tools &gt; External tools_ and add a new tool called &quot;ESLint auto-fix&quot;.
 
 In case you have a local installation of _ESLint_ you have to point to _node_modules/.bin/eslint_ in the _Programs_ input field. In the _Parameters_ input field we can use a _IntelliJ variable_ to point to the path of the currently edited file: _--ext .js,.vue --fix $FilePath$_.
 
