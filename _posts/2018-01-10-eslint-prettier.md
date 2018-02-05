@@ -181,7 +181,7 @@ Because of the wide range of possibilities to write _.eslintrc.\*_ files, it is 
   "scripts": {
     "lint": "eslint --ext .js,.vue src test",
     "lint-autofix": "eslint --ext .js,.vue src test --fix",
-    "eslint-check": "eslint --print-config .eslintrc.js &gt; eslint-config-prettier-check"
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
   }
 }
 ```
@@ -202,7 +202,7 @@ With _Husky_ in place, we can add Git hooks by [adding corresponding npm scripts
     "lint": "eslint --ext .js,.vue src test",
     "lint-autofix": "eslint --ext .js,.vue src test --fix",
     "eslint-check":
-      "eslint --print-config .eslintrc.js &gt; eslint-config-prettier-check",
+      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "precommit": "npm run lint-check && npm run lint"
   }
 }
