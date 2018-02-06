@@ -10,6 +10,10 @@ medium:
 - vue.js
 ---
 
+### Updates
+
+* **02 February 2018** [Wes Bos](https://twitter.com/wesbos) recorded a nice about setting up _Visual Studio Code_. I added a small [section on his alternative approach](#wesbos) for inspiration and trouble shooting.
+
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust development workflow that works from within different editors as well as from npm scripts.
 
 # Automation is the Key &ndash; Improving Productivity
@@ -340,6 +344,14 @@ Next, you see how this looks in your source code file.
 ![Linted file within Visual Studio Code with Prettier and Vue.js-specific ESLint issues](../images/vcode-file-linted.png)
 
 The first issue is a formatting problem that can be auto-fixed by just saving the file. Pretty convenient, isn't it? The second error is issued by _eslint-plugin-vue_. Because we put _&quot;plugin:vue/recommended&quot;_ into the _extends_ array, _ESLint_ let us know about a property ordering violation. In this example, _components_ should be placed before _template_ &ndash; this issue cannot be auto-fixed by _ESLint_.
+
+## <a name="wesbos"></a>Alternative Approach to Setup Up Visual Studio Code
+
+There isn't just one way of doing it. Because of so many technologies and concepts that have to used together, it is not easy to get everything working as expected. Therefore, it is helpful to show an alternative way without using the _Prettier Visual Studio Code plugin_ as with my approach above.
+
+[Wes Bos](https://twitter.com/wesbos) tweeted about [some problems to get auto-fixing working](https://twitter.com/wesbos/status/960599071164698625) in _Visual Studio Code_ and came up with a nice solution. He was also kind to record a [Youtube video](https://twitter.com/wesbos/status/960607783652642817) about it. Since I had similar problems during preparation of my demo project, I like to share this.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YIvjKId9m2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## IntelliJ
 
