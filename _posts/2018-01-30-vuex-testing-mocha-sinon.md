@@ -50,6 +50,8 @@ _.babelrc_
 * adaptions: ...
 * Anleitung wie es erstellt werden kann
 
+## Screenshot code coverage
+
 ## Infos zu Demo Projekt
 
 * Demo github Projekt aufsetzen
@@ -57,6 +59,8 @@ _.babelrc_
 ## Using axios-mock-adapter for Testing Successful and Failing Requests
 
 ## Mocking Asynchronous Code with Sinon
+
+## TODO: Diagram / Grafik zur Vereinfachung
 
 ## Skeleton for Testing Actions and Websocket Communication
 
@@ -86,9 +90,58 @@ describe("actions", () => {
 });
 ```
 
+## How to Test Vuex Actions?
+
+Before I answer this question, let's have a quick recap of a _Vuex_ action.
+
+```javascript
+export const loadUsers = function({ commit }) {
+  axios
+    .get(`/api/allusers`)
+    .then(response => {
+      commit(mutationTypes.SET_USERS, response.data);
+    })
+    .catch(e => {
+      commit(mutationTypes.FAILURE, "500");
+    });
+};
+```
+
+Besides the fact, that virtually every time a remote call is performed (we deal with this fact later), an action will commit one or more mutations based on the context. The context is created, e.g., by the response of the remote call or the action's arguments like state or a payload.
+
+The main purpose of actions is to commit mutations. Thus, we want to verify that _Vuex's commit_ function is invoked correctly with the correct arguments. Since we do not want to invoke the implementation, we want to mock the _commit_ function. In the following section we deal with this aspect.
+
 ## Mocking Vuex's Commit Object
 
 Based on the [official Vuex documentation](https://vuex.vuejs.org/en/testing.html) for testing actions, I created a file named _testUtils.js_ as testing helper. We utilize the _testAction_ function in our tests in order to verify that the action under test invokes the correct mutations with the correct arguments.
+
+Before I go into the implementation details of our helper function, I show you how we want to use it later in tests. The following snippet constitutes a test outlining the testing approach we strive for as depicted in the last section.
+
+```javascript
+it("should invoke correct mutations for successful GET", done => {
+  const response = {
+    foodlist: ["salmon", "peanut butter"]
+  };
+  mock.onGet("/api/getnextbreakfast").reply(200, response);
+  const actionPayload = null;
+  const state = null;
+  const expectedMutations = [
+    {
+      type: mutationTypes.SET_NEXT_BREAKFAST,
+      payload: response
+    },
+    {
+      type: mutationTypes.CHANGE_AVAILABLE_FOODS,
+      payload: response.foodlist
+    }
+  ];
+  testAction(loadNextBreakfast, actionPayload, state, expectedMutations, done);
+});
+```
+
+The exemplary test above verifies that the _Vuex_ action _loadNextBreakfast_ commits the expected mutations, described with the array _expectedMutations_. _type_ and _payload_ represent the arguments of [Vuex's commit function](https://github.com/vuejs/vuex/blob/dev/src/store.js). We want to verify inside our helper function that the correct mutations were triggered with the correct arguments. _payload_ can be null, if a mutation needs to be committed only with a type. _actionPayload_ and _state_ are optional arguments and, thus, can be null. If the action under test needs to operate on the state and / or requires an payload object as input, you have to provide it with these two arguments.
+
+The implementation of _testAction_ contains the logic to mock the _commit_ function. It is displayed in the next code snippet.
 
 ```javascript
 // testUtils.js
@@ -131,7 +184,9 @@ export const testAction = (
 };
 ```
 
-Let's break the code in the above snippet down a bit. First the function arguments.
+In the beginning, I had a hard time to understand the _Vuex_ documentation and I think it might help to break the code into pieces and explain it step by step.
+
+Let's start with the function arguments.
 
 ```javascript
 export const testAction = (
@@ -166,6 +221,8 @@ const expectedMutations = [
 ```
 
 * **done** is a callback that we need to invoke inside our helper function when the test is complete. This is because _Vuex_ actions are asynchronous. You can read more about this concept in the [Mocha documentation on how to test asynchronous code](https://mochajs.org/#asynchronous-code).
+
+Next up, the function body.
 
 ## Implementing Action Tests
 
