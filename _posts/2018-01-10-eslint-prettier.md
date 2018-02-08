@@ -12,7 +12,7 @@ medium:
 
 ### Updates
 
-* **02 February 2018** [Wes Bos](https://twitter.com/wesbos) recorded a nice about setting up _Visual Studio Code_. I added a small [section on his alternative approach](#wesbos) for inspiration and trouble shooting.
+* **02 February 2018** [Wes Bos](https://twitter.com/wesbos) recorded a nice video about setting up _Visual Studio Code_. I added a small [section on his alternative approach](#wesbos) for inspiration and trouble shooting.
 
 Lately, I have been investigating quite some time into linting and formatting of JavaScript code for large projects with many developers and diverse set of editors or IDEs. In many projects at work, tools like _JSHint_, _ESLint_, or _Prettier_ are all over the place. I realized that I didn't have a thorough overview of concepts and technologies for static code analyzing and formatting. Thus, I have started to get a better idea on how to establish a robust development workflow that works from within different editors as well as from npm scripts.
 
