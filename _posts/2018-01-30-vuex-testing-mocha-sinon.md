@@ -12,85 +12,67 @@ medium:
 - actions
 ---
 
-# ESLint Configuration
+# Testing Strategy for Testing Vuex Actions
 
-_.eslintrc.json_
+During this section, I try to explain the testing concept, which libraries we use, as well as the testing skeleton, before I go into details of [implementing actual tests](#test-impl).
 
-```json
-{
-  "env": {
-    "mocha": true,
-    "jest": true
-  },
-  "globals": {
-    "expect": true,
-    "sinon": true
-  }
-}
-```
+## Skeleton for Testing Actions and Involved Technologies
 
-_.babelrc_
-
-```json
-{
-  "presets": [["es2015", { "modules": false }], "stage-2"],
-  "plugins": ["transform-runtime"],
-  "comments": false,
-  "env": {
-    "test": {
-      "plugins": ["istanbul", "transform-es2015-modules-commonjs"]
-    }
-  }
-}
-```
-
-## Vue Project Setup
-
-* webpack template
-* adaptions: ...
-* Anleitung wie es erstellt werden kann
-
-## Screenshot code coverage
-
-## Infos zu Demo Projekt
-
-* Demo github Projekt aufsetzen
-
-## Using axios-mock-adapter for Testing Successful and Failing Requests
-
-## Mocking Asynchronous Code with Sinon
-
-## TODO: Diagram / Grafik zur Vereinfachung
-
-## Skeleton for Testing Actions and Websocket Communication
+The next code snippet represents our skeleton for testing _Vuex_ actions.
 
 ```javascript
 // actions.spec.js
+
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai from "chai";
-import Vue from "vue";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
+let mock = new MockAdapter(axios);
 
 import { testAction } from "./testUtils";
+
 import actions from "@/store/actions";
 import * as mutationTypes from "@/store/mutation-types";
-import StompPlugin from "@/store/StompPlugin";
-import * as stompTypes from "@/store/stomp-message-types";
 
 chai.use(sinonChai);
-Vue.use(StompPlugin);
 
 describe("actions", () => {
   beforeEach(function() {
     mock.reset();
   });
-  describe("user actions", () => {
-    /* tests here */
+
+  it("should process payload and commits mutation for successful GET", done => {
+    /* testing code here */
   });
 });
 ```
 
-## How to Test Vuex Actions?
+Let's go through the import statements to see which technologies we leverage for our tests. [Sinon](http://sinonjs.org/) provides standalone test spies, stubs and mocks that can be also used with [Mocha](https://mochajs.org/), which is our testing framework. We also utilize [Chai](http://chaijs.com/) that constitutes a BDD assertion library. [Sinon-Chai] allows for writing nice _Chai_ assertions together with the mocking capabilities provided by _Sinon_. The following line extends _Chai_ with further assertions for _Sinon_.
+
+```javascript
+chai.use(sinonChai);
+```
+
+Besides _Sinon_ there are alternative ways to mock dependencies. We also use [Axios Mock Adapter](https://github.com/ctimmerm/axios-mock-adapter) to isolate the actual remote calls. In addition, it offers us a powerful feature to test our actions with different REST call responses.
+
+Later, I show you testing examples that use _Axios Mock Adapter_. In order to ensure that every test is independent, created mocks need to be destroyed after every test. The following _beforeEach_ function does this.
+
+```javascript
+beforeEach(function() {
+  mock.reset();
+});
+```
+
+With the help of the following import statement, we bring in our helper function to verify that _Vuex_ actions commits the correct mutations.
+
+```javascript
+import { testAction } from "./testUtils";
+```
+
+In the next section, we walk through this helper function in great detail since it is the gist of our testing strategy.
+
+## Well, How to Implement Action Tests?
 
 Before I answer this question, let's have a quick recap of a _Vuex_ action.
 
@@ -224,9 +206,9 @@ const expectedMutations = [
 
 Next up, the function body.
 
-## Implementing Action Tests
+# <a name="test-impl"></a>Implementation of Action Tests
 
-### Testing Use Case 1: Checking of Correct Commit Invocation
+## Testing Use Case 1: Checking of Correct Commit Invocation
 
 To get our feet wet, let's start with a simple example. Consider the following action _toggleShowDoneTasks_ inside _actions.js_.
 
@@ -269,11 +251,53 @@ it("toggleShowDoneTasks should invoke correct mutation", done => {
 * Check if all Mutations have been Dispatched
 * Implementierung auch anzeigen
 
-### Testing axios
+## Testing Use Case 2: Using Axios Mock Adapter for Testing Successful and Failing Requests
 
-* success case
-* failure case
+## Testing Use Case 3: Mocking Asynchronous Code with Sinon
 
-## Testing Websocket Communication
+# Vue Project Setup
 
-* klären ob es Teil dieses Vortrags sein sollte
+## Vue.js CLI
+
+* webpack template
+* adaptions: ...
+* Anleitung wie es erstellt werden kann
+
+## ESLint Configuration
+
+_.eslintrc.json_
+
+```json
+{
+  "env": {
+    "mocha": true,
+    "jest": true
+  },
+  "globals": {
+    "expect": true,
+    "sinon": true
+  }
+}
+```
+
+_.babelrc_
+
+```json
+{
+  "presets": [["es2015", { "modules": false }], "stage-2"],
+  "plugins": ["transform-runtime"],
+  "comments": false,
+  "env": {
+    "test": {
+      "plugins": ["istanbul", "transform-es2015-modules-commonjs"]
+    }
+  }
+}
+```
+
+# TODOs
+
+* Diagram / Grafik zur Vereinfachung
+* Screenshot code coverage
+* Infos zu Demo Projekt
+* Demo github Projekt aufsetzen
