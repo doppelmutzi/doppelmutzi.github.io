@@ -14,7 +14,7 @@ medium:
 
 # Testing Strategy for Testing Vuex Actions
 
-During this section, I try to explain the testing concept, which libraries we use, as well as the testing skeleton, before I go into details of [implementing actual tests](#test-impl).
+During this section, I try to explain the testing concept, which libraries I use, as well as the testing skeleton, before I go into details of [implementing actual tests](#test-impl).
 
 ## Skeleton for Testing Actions and Involved Technologies
 
@@ -23,7 +23,7 @@ The next code snippet represents our skeleton for testing _Vuex_ actions.
 ```javascript
 // actions.spec.js
 
-import sinon from "sinon";
+import sinon, { expect } from "sinon";
 import sinonChai from "sinon-chai";
 import chai from "chai";
 import axios from "axios";
@@ -48,7 +48,7 @@ describe("actions", () => {
 });
 ```
 
-Let's go through the import statements to see which technologies we leverage for our tests. [Sinon](http://sinonjs.org/) provides standalone test spies, stubs and mocks that can be also used with [Mocha](https://mochajs.org/), which is our testing framework. We also utilize [Chai](http://chaijs.com/) that constitutes a BDD assertion library. [Sinon-Chai] allows for writing nice _Chai_ assertions together with the mocking capabilities provided by _Sinon_. The following line extends _Chai_ with further assertions for _Sinon_.
+Let's go through the import statements to see which technologies we leverage for the tests. [Sinon](http://sinonjs.org/) provides standalone test spies, stubs and mocks that can be also used with [Mocha](https://mochajs.org/), which is our testing framework. We also utilize [Chai](http://chaijs.com/) that constitutes a BDD assertion library. [Sinon-Chai] allows for writing nice _Chai_ assertions together with the mocking capabilities provided by _Sinon_. The following line extends _Chai_ with further assertions for _Sinon_.
 
 ```javascript
 chai.use(sinonChai);
@@ -77,11 +77,12 @@ In the next section, we walk through this helper function in great detail since 
 Before I answer this question, let's have a quick recap of a _Vuex_ action.
 
 ```javascript
-export const loadUsers = function({ commit }) {
+export const loadNextBreakfast = function({ commit }) {
   axios
-    .get(`/api/allusers`)
+    .get("/api/getnextbreakfast")
     .then(response => {
-      commit(mutationTypes.SET_USERS, response.data);
+      commit(mutationTypes.SET_NEXT_BREAKFAST, response.data);
+      commit(mutationTypes.CHANGE_AVAILABLE_FOODS, [...response.data.foodlist]);
     })
     .catch(e => {
       commit(mutationTypes.FAILURE, "500");
@@ -91,7 +92,7 @@ export const loadUsers = function({ commit }) {
 
 Besides the fact, that virtually every time a remote call is performed (we deal with this fact later), an action will commit one or more mutations based on the context. The context is created, e.g., by the response of the remote call or the action's arguments like state or a payload.
 
-The main purpose of actions is to commit mutations. Thus, we want to verify that _Vuex's commit_ function is invoked correctly with the correct arguments. Since we do not want to invoke the implementation, we want to mock the _commit_ function. In the following section we deal with this aspect.
+The main purpose of actions is to commit mutations. Thus, we want to verify that _Vuex's commit_ function is invoked correctly with the correct arguments. Since we do not want to invoke the implementation, we have to mock the _commit_ function. In the following section we deal with this aspect.
 
 ## Mocking Vuex's Commit Object
 
@@ -155,12 +156,10 @@ export const testAction = (
     }
   };
 
-  // check if no mutations should have been dispatched
   if (expectedMutations.length === 0) {
     expect(count).to.equal(0);
     done();
   } else {
-    // call the action with mocked store and arguments
     action({ commit, state }, actionPayload);
   }
 };
@@ -206,6 +205,58 @@ const expectedMutations = [
 
 Next up, the function body.
 
+```javascript
+let count = 0;
+let commit = (type, payload) => {
+  /* ... */
+  count++;
+  /* ... */
+};
+if (expectedMutations.length === 0) {
+  expect(count).to.equal(0);
+  done();
+} else {
+  action({ commit, state }, actionPayload);
+}
+```
+
+_testAction_ declares a _count_ variable initialized to _0_ outside of the mock _commit_ function. Inside of _commit_ the _count_ variable is increased whenever it is invoked. The whole process is triggered with the invocation of the actual action inside the _else_ clause. _action_ refers to the _Vuex_ action under test that is passed as argument to _testAction_. Besides our mock commit function we also pass a mock _state_ and _actionPayload_ that are also passed as arguments to _testAction_. The _if_ clause handles the case that an action does not commit any mutation. _done()_ is important to signal _Mocha_ that our asynchronous test code is completed.
+
+Finally, we take a closer look at arrow function that constitutes our mock commit.
+
+```javascript
+let commit = (type, payload) => {
+  let mutation = expectedMutations[count];
+  try {
+    expect(mutation.type).to.equal(type);
+    if (payload) {
+      expect(mutation.payload).to.deep.equal(payload);
+    }
+    count++;
+    if (count >= expectedMutations.length) {
+      done();
+    }
+  } catch (error) {
+    done(error);
+  }
+};
+```
+
+First, we extract our mutation with the current _count_ from the passed _expectedMutations_ array. Remember, _mutation_ looks like this.
+
+```javascript
+  {
+    type: mutationTypes.SET_NEXT_BREAKFAST,
+    payload: response
+  }
+```
+
+We verify that type and payload do match. Since not every mutation needs a payload, we first test that _payload_ is defined. It is important to call _done()_ if all expected mutations have been dispatched otherwise we get a _Mocha_ error. We use a _try-catch block_ for the same reason in order to terminate the unit test if a exception inside our action occurs.
+
+So, the test above verifies that _loadNextBreakfast_ action commits two mutations. The following diagram depicts the whole flow.
+
+**TODO Diagramm**
+
 # <a name="test-impl"></a>Implementation of Action Tests
 
 ## Testing Use Case 1: Checking of Correct Commit Invocation
@@ -224,13 +275,13 @@ export default {
 };
 ```
 
-For the sake of clarity, we skip the actual mutations and, instead, consider them as black boxes. We just want to test actions, i.e., we want to verify whether mutations are invoked correctly with the correct arguments. In the above action, we just invoke _commit_ with a mutation type without any payload.
+For the sake of clarity, we skip the actual implementations of mutations and, instead, consider them as black boxes. We just want to test actions, i.e., we want to verify whether mutations are invoked correctly with the correct arguments. In the above action, we just invoke _commit_ with a mutation type without any payload.
 
 Let's take a look at the test for this action. We leverage our _testAction_ function from above.
 
 ```Javascript
 // actions.spec.js
-it("toggleShowDoneTasks should invoke correct mutation", done => {
+it("toggleShowDoneTasks should commit mutation", done => {
     const payload = null;
     const state = null;
     const expectedMutations = [
