@@ -277,9 +277,7 @@ First, I extract the _mutation_ with the current _count_ from the passed _expect
 
 Then, I verify that _type_ and _payload_ do match. Since not every _mutation_ needs a payload, I verify that the _payload_ object is defined. It is important to call _done()_ if all expected _mutations_ have been dispatched, otherwise I get a _Mocha_ error. Additionally, I use a _try-catch block_ for the same reason in order to terminate the unit test in case an exception occurs inside our _action_.
 
-So, the test above verifies that &quot;loadNextBreakfast&quot; _action_ dispatches two _mutations_. The following diagram depicts the whole flow.
-
-**TODO Balsamiq Diagramm**
+In summary, the test above verifies that &quot;loadNextBreakfast&quot; _action_ dispatches two _mutations_, with the right _type_ and _payload_ in the right order.
 
 ## <a name="test-async"></a>Testing Asynchronous Code
 
@@ -304,7 +302,7 @@ Next section I present two approaches to prevent the invocation of the actual im
 
 # <a name="section2"></a>Overview of Testing Use Cases
 
-## <a name="use-case1"></a>Testing Use Case 1: Verifying that Actions Dispatch Mutations correctly
+## <a name="use-case1"></a>Testing Use Case 1: Verifying that a Action Dispatches Mutations correctly
 
 As described in great detail in the previous section, this is the heart of testing _Vuex actions_.
 
@@ -485,7 +483,7 @@ After setting up the stubs, _state_, and _payload_, this test verifies that the 
 
 # Conclusion
 
-With the testing approach demonstrated above, it is possible to have a 100% code coverage of _Vuex actions_ as depicted in the next screenshot. Maybe you have the same opinion, _actions_ are one of the most important but also most complex parts of your _Vue.js_ application. That's why testing them entirely is crucial!
+With the testing approach demonstrated above, it is possible to have a 100% code coverage of _Vuex actions_ as depicted in the next screenshot. Maybe you have the same opinion that _actions_ are one of the most important but also most complex parts of your _Vue.js_ application. That's why testing them entirely is crucial!
 
 ![With the testing approach 100% LOC of Vuex actions can be tested](../images/vuex-testing-code-coverage.png)
 
