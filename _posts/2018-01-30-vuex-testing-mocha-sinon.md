@@ -2,7 +2,7 @@
 layout: post
 title: Unit Testing of Vuex Actions with Mocha and Sinon
 slug: vuex-testing-mocha-sinon
-date: 2018-01-30
+date: 2018-02-18
 categories: JavaScript
 medium:
 - mocha
