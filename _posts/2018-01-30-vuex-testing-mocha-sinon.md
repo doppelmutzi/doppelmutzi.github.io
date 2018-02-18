@@ -479,9 +479,33 @@ it("should spawn a notification and should not perform an ajax call with stomp f
 
 After setting up stubs, _state_, and _payload_, this test verifies that the action named &quot;toggleAvailability&quot; spawns a notification but does not perform a remote call. With this kind of unit test I'm not interested in verifying that correct _mutations_ are dispatched (see [testing use case 1](#use-case1)). Therefore, I also use _Sinon_ to mock _commit_ and just pass it as argument to the _action_ function.
 
+# Jest &ndash; a Mocha Alternative
+
+End of 2017, _Vue.js_'s official [Webpack Template](https://github.com/vuejs-templates/webpack) added support for Facebook's [Jest](https://facebook.github.io/jest/). The installation wizard allows for choosing between _Mocha_ and _Jest_.
+
+<blockquote class="twitter-tweet" data-lang="de"><p lang="en" dir="ltr">Latest vue.js webpack template has moved to Jest, this reduces test run time to a couple of seconds.🎉😂 Was quite easy to upgrade as well, and support for HTTPS in webpack dev server is 💯 <a href="https://twitter.com/hashtag/vuejs?src=hash&amp;ref_src=twsrc%5Etfw">#vuejs</a> <a href="https://t.co/WZ5SY2mWd8">https://t.co/WZ5SY2mWd8</a></p>&mdash; Mark Wolfe (@wolfeidau) <a href="https://twitter.com/wolfeidau/status/932189770125414400?ref_src=twsrc%5Etfw">19. November 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+I leave undecided which technology is better because I haven't looked into _Jest_ yet. However, I see a lot of articles and tweets about people moving from _Mocha_ to _Jest_.
+
+<blockquote class="twitter-tweet" data-lang="de"><p lang="en" dir="ltr">We are moving from Mocha+chai to Jest. <br><br>The main benefit is test isolation: we have some suboptimal test polluting/depending on the global state and we want to prevent that with Jest.<br><br>Our challenge is to move ~10k tests owned by ~10 different teams 😓</p>&mdash; Sergio Cinos🇪🇸🇦🇺 (@scinos) <a href="https://twitter.com/scinos/status/936233521558913024?ref_src=twsrc%5Etfw">30. November 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet" data-lang="de"><p lang="en" dir="ltr">Sorry <a href="https://twitter.com/hashtag/mocha?src=hash&amp;ref_src=twsrc%5Etfw">#mocha</a> and <a href="https://twitter.com/hashtag/chai?src=hash&amp;ref_src=twsrc%5Etfw">#chai</a>. Time to part our ways. <br>Oh, hello <a href="https://twitter.com/hashtag/jest?src=hash&amp;ref_src=twsrc%5Etfw">#jest</a></p>&mdash; Hakan Dolas (@hakandolas) <a href="https://twitter.com/hakandolas/status/961976424637837312?ref_src=twsrc%5Etfw">9. Februar 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+_Jest_ is especially popular for its [snapshot testing](https://facebook.github.io/jest/docs/en/snapshot-testing.html). It also comes with [mocking capabilities](https://facebook.github.io/jest/docs/en/mock-functions.html). However, most of the time, I have come across articles about _Jest_ and how to use it for component testing. At least [Lachlan Miller](https://codeburst.io/@lachlanmiller_52885) wrote about using [Jest for testing Vuex actions](https://codeburst.io/a-pattern-for-mocking-and-unit-testing-vuex-actions-8f6672bdb255).
+
+It seems that one of _Jest_'s benefits is its performance. [Edd Yerburg](https://twitter.com/EddYerburgh), one of the authors of [vue-test-utils](https://github.com/vuejs/vue-test-utils), gave a talk about [testing Vue components](http://slides.com/eddyerburgh/testing-vue-components#/) and provided a [comparison of Vue SFC unit tests using different test runners](https://github.com/eddyerburgh/vue-unit-test-perf-comparison).
+
+Up to now, it is not clear for me, if there are any obvious advantages of _Jest_ over _Mocha_ in terms of unit testing _Vuex_ code.
+
 # Conclusion
 
-With the testing approaches above, it is possible to have a 100% code coverage of _Vuex actions_ as depicted in the next screenshot. Maybe you have the same attitude that _actions_ are one of the most important but also most complex parts of your _Vue.js_ application. That's why testing them entirely is crucial!
+Moving the discussion beside which testing technology performs better, it is important to test your _Vuex actions_.
+With the testing approaches above (using _Mocha_), it is possible to have a 100% code coverage of _Vuex actions_ as depicted in the next screenshot. I think you can also replace _Mocha_ with _Jest_ very easily and get the same test coverage.
+
+Maybe you have the same attitude like me that _actions_ are one of the most important but also most complex parts of your _Vue.js_ application. That's why testing them entirely is crucial!
 
 ![With the testing approach 100% LOC of Vuex actions can be tested](../images/vuex-testing-code-coverage.png)
 
