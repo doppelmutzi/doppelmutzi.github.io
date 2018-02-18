@@ -502,7 +502,7 @@ Up to now, it is not clear for me, if there are any obvious advantages of _Jest_
 
 # Conclusion
 
-Moving the discussion beside which testing technology performs better, it is important to test your _Vuex actions_.
+Leaving the discussion out, which testing technology performs better, it is important to test your _Vuex actions_.
 With the testing approaches above (using _Mocha_), it is possible to have a 100% code coverage of _Vuex actions_ as depicted in the next screenshot. I think you can also replace _Mocha_ with _Jest_ very easily and get the same test coverage.
 
 Maybe you have the same attitude like me that _actions_ are one of the most important but also most complex parts of your _Vue.js_ application. That's why testing them entirely is crucial!
