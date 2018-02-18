@@ -208,17 +208,17 @@ export const testAction = (
 * **state** represents the _Vuex state object_ that is required by the _action_ under test. The object must just define the properties needed by the _action_. It can also be _null_ if the _action_ does not operate on the _state_ at all.
 * **expectedMutations** is an array containing one or more objects, which hold the arguments for invoking the _commit_ function. Here is a recap of what it looks like:
 
-```Javascript
+```javascript
 const expectedMutations = [
-    {
-      type: mutationTypes.SET_NEXT_BREAKFAST,
-      payload: response
-    },
-    {
-      type: mutationTypes.CHANGE_AVAILABLE_FOODS,
-      payload: response.foodlist
-    }
-  ];
+  {
+    type: mutationTypes.SET_NEXT_BREAKFAST,
+    payload: response
+  },
+  {
+    type: mutationTypes.CHANGE_AVAILABLE_FOODS,
+    payload: response.foodlist
+  }
+];
 ```
 
 * **done** is a callback that I have to invoke inside the helper function when a test has completed. This is because _Vuex actions_ are asynchronous. You can read more about this concept in the [Mocha documentation on how to test asynchronous code](https://mochajs.org/#asynchronous-code).
@@ -355,7 +355,8 @@ describe("actions", () => {
 I utilize _mock_ to check whether the _action_ under test operates correctly for successful and failing _axios_ calls. In the following snippet, the first test is an example for a remote call responding with status code of _200_. The second test checks that the correct _mutation_ is dispatched in case of a network error.
 
 ```javascript
-it("should process payload and invoke correct mutation for successful GET", done => {
+it("should process payload and invoke correct mutation
+  for successful GET", done => {
   const response = {
     foodlist: ["salmon", "peanut butter"]
   };
@@ -438,7 +439,8 @@ For the purpose of this article, it is not necessary to understand the whole imp
 All in all, the test implementation has to mock external dependencies. Concrete, it has to cope with the _axios_ remote call, the _Vuex commit_ function as well as the _spawnNotification_ function. The following code snippet shows a test implementation that makes use of _Sinon_ to isolate all these dependencies.
 
 ```javascript
-it("should spawn a notification and should not perform an ajax call with stomp flag set to true", () => {
+it("should spawn a notification and should not perform an ajax call
+  with stomp flag set to true", () => {
   const notificationStub = sinon.stub(notification, "spawnNotification");
   const axiosStub = sinon.stub(axios, "put");
   const commit = sinon.stub();
