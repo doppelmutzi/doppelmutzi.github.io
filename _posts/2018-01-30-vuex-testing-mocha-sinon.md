@@ -509,6 +509,6 @@ Maybe you have the same attitude like me that _actions_ are one of the most impo
 
 ![With the testing approach 100% LOC of Vuex actions can be tested](../images/vuex-testing-code-coverage.png)
 
-Another good thing, if you establish such a testing approach, you also gain a better understanding of _Vuex_ and, thereby,you get a better _Vue.js_ developer.
+Another good thing, if you establish such a testing approach, you also gain a better understanding of _Vuex_ and, thereby, you get a better _Vue_ developer.
 
 It would be nice if you let me know what you think about my testing approach in the comments. How do you test your _Vuex_ code?
