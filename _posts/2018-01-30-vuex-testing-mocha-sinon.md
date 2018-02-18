@@ -6,6 +6,7 @@ date: 2018-01-30
 categories: JavaScript
 medium:
 - mocha
+- sinon
 - vuex
 - vue.js
 - testing
