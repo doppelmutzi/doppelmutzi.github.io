@@ -15,9 +15,9 @@ medium:
 
 Unit testing your [Vuex](https://vuex.vuejs.org/en/)-powered state management includes verifying [getters](https://vuex.vuejs.org/en/getters.html), [mutations](https://vuex.vuejs.org/en/mutations.html), and [actions](https://vuex.vuejs.org/en/actions.html). Because of the synchronous nature of _getters_ and _mutations_, testing them is straight forward. On the other hand, testing _actions_ can be sometimes tricky since most of the time asynchronous code is involved. Especially testing the key functionality of your _actions_ is not easy &ndash; are your _actions_ dispatching _mutations_ correctly in the right context with the right arguments?
 
-This article is only concerned with testing actions. Because it took me quite some time to figure out how I can establish a testing strategy that allows for [code coverage] of 100%(https://en.wikipedia.org/wiki/Code_coverage), I hope my article offers you some helpful information on this topic.
+This article is only concerned with testing actions. Because it took me quite some time to figure out how I can establish a testing strategy that allows for [code coverage](https://en.wikipedia.org/wiki/Code_coverage) of 100%, I hope my article offers you some helpful information on this topic.
 
-This article is structured into the following sections:
+This article is structured into the following parts:
 
 * [Strategy for Testing Vuex Actions](#section1) &ndash; This constitutes the most important part of this article. Here, I try to provide code examples and explain them in great detail. The goal here is that you get a better understanding of _Vuex_ and how to test things. How to mock _Vuex's commit_ function is in the focus of this section.
 * [Overview of Testing Use Cases](#section2) &ndash; This section takes up the learnings from the previous section and provides a quick overview on different testing approaches, especially on how to isolate 3rd-party dependencies, such as remote calls. To get a quick overview on how my testing approach looks like, just jump directly to this section.
@@ -38,6 +38,8 @@ $ vue init webpack my-project
 * Select &quot;Karma and Mocha&quot;
 
 This installs all required _npm modules_ for you.
+
+Recently, using [Jest] with _Vue_ has came up. [At the end of this article](#jest), I reveal my thoughts on this topic.
 
 ## <a name="skeleton"></a>Skeleton for Testing Actions and Involved Technologies
 
@@ -77,7 +79,7 @@ Let's go through the _import statements_ to see which technologies are involved.
 chai.use(sinonChai);
 ```
 
-Besides _Sinon_, there are alternative ways for mocking dependencies. I also use [Axios Mock Adapter](https://github.com/ctimmerm/axios-mock-adapter) (short _AxiosMock_) to isolate the actual remote calls. In addition, it offers a powerful feature to test actions with different remote call responses. E.g., you can verify that a remote call was successful.
+Besides _Sinon_, there are alternative ways for mocking dependencies. I also use [Axios Mock Adapter](https://github.com/ctimmerm/axios-mock-adapter) to isolate the actual remote calls. In addition, it offers a powerful feature to test actions with different remote call responses. E.g., you can verify that a remote call was successful.
 
 Later, I show you testing examples using _AxiosMock_. In order to ensure that every test is independent from each other, created mocks need to be destroyed after every test. The following _beforeEach_ function does exactly this:
 
@@ -87,7 +89,7 @@ beforeEach(function() {
 });
 ```
 
-With the help of the following _import statement_, I bring in my helper function to verify that _Vuex_ actions dispatch mutations correctly.
+With the help of the following _import statement_, I bring in my helper function to verify that _Vuex actions_ dispatch _mutations_ correctly.
 
 ```javascript
 import { testAction } from "./testUtils";
@@ -95,9 +97,9 @@ import { testAction } from "./testUtils";
 
 In the next section, I walk through this helper function in great detail since it is the crucial part of my testing strategy.
 
-## Well, How to Implement Action Tests?
+## How to Implement Action Tests?
 
-Before I answer this question, let's have a quick recap of a _Vuex_ action.
+Before I answer this question, let's have a quick recap of a _Vuex action_.
 
 ```javascript
 export const loadNextBreakfast = function({ commit }) {
@@ -113,15 +115,15 @@ export const loadNextBreakfast = function({ commit }) {
 };
 ```
 
-Besides the fact, that virtually every time a remote call is performed (we deal with this fact later), an action will commit one or more _mutations_ based on the context. A context arises, e.g., by a remote call response or by providing particular function arguments, e.g., a _state_ or an _action payload_.
+Besides the fact, that virtually every time a remote call is performed (we deal with this fact later), an _action_ will commit one or more _mutations_ based on the context. A context arises, e.g., by a remote call response or by providing particular function arguments, e.g., a _state_ or an _action payload_.
 
-The main purpose of _actions_ is to dispatch or commit _mutations_, respectively. Thus, most of the time I want to verify that _Vuex's commit_ function is invoked correctly with the right arguments. Since I do not want to invoke the actual mutation implementation, I have to mock the _commit_ function. In the next section we deal with this aspect.
+The main purpose of _actions_ is to dispatch or commit _mutations_, respectively. Thus, most of the time I want to verify that _Vuex's commit_ function is invoked correctly with the right arguments. Since I do not want to invoke the actual _mutation_ implementation, I have to mock the _commit_ function. In the next section we deal with this aspect.
 
 ## <a name="mock-commit"></a>Mocking Vuex's Commit Function
 
 Based on the [official Vuex documentation](https://vuex.vuejs.org/en/testing.html) for testing actions, I created a file named _testUtils.js_ as testing helper. In principle, _Vuex_'s documentation provides all necessary information. However, I had a hard time to understand the mechanism due to the fact that it is spare on the topic of testing _actions_.
 
-I utilize _testAction_ function in tests in order to verify that the _action_ under test invokes the correct mutations with right arguments and in right order.
+I utilize _testAction_ function in tests in order to verify that the _action_ under test invokes the correct _mutations_ with right arguments and in right order.
 
 Before I go into implementation details of the helper function, I show you how I want to use it later in tests.
 
@@ -147,7 +149,7 @@ it("should invoke correct mutations for successful GET", done => {
 });
 ```
 
-The example test above verifies that the _Vuex_ action &quot;loadNextBreakfast&quot; commits the expected mutations, described with the array _expectedMutations_. _type_ and _payload_ represent the arguments of [Vuex's commit function](https://github.com/vuejs/vuex/blob/dev/src/store.js). I also want to verify inside the helper function that the correct mutations were triggered with the correct arguments. _payload_ can be null, if a mutation needs to be committed with a _type_ only. _actionPayload_ and _state_ are optional arguments and, thus, can be null. If the _action_ under test needs to operate on _state_ and / or requires a _payload_ object as input, you have to provide it with these two arguments.
+The example above verifies that the _Vuex action_ &quot;loadNextBreakfast&quot; commits the expected _mutations_, described with the array _expectedMutations_. _type_ and _payload_ represent the arguments of [Vuex's commit function](https://github.com/vuejs/vuex/blob/dev/src/store.js). I also want to verify inside the helper function that the correct _mutations_ were triggered with the correct arguments. _payload_ can be null, if a _mutation_ needs to be committed with a _type_ only. _actionPayload_ and _state_ are optional arguments and, thus, can be null. If the _action_ under test needs to operate on _state_ and / or requires a _payload_ object as input, you have to provide it with these two arguments.
 
 _testAction_ contains the logic to mock the _commit_ function.
 
@@ -241,7 +243,7 @@ if (expectedMutations.length === 0) {
 }
 ```
 
-_testAction_ declares a _count_ variable initialized to _0_ outside of the mock _commit_ function. _count_ gets increased whenever _commit_ is invoked by the _action_ that gets this mock _commit_ passed as an argument.
+_testAction_ declares a _count_ variable initialized to _0_ outside of the mock _commit_ function. _count_ gets increased whenever _commit_ is invoked by the _action_ that gets this mock _commit_ passed as argument.
 
 The whole process is triggered by calling the actual _action_ inside the _else_ clause. _action_ refers to the _Vuex action_ under test that is passed as argument to _testAction_. Besides our mock _commit_ function, I also pass a mock _state_ and an _actionPayload_ as arguments to _testAction_. The _if_ clause handles the case that an _action_ does not commit any _mutation_. _done()_ is important to signal _Mocha_ that the asynchronous test code is completed.
 
@@ -435,7 +437,7 @@ This example _action_ has two contexts:
 1. The user triggers an event from the UI and the _action_ invokes an _axios_ call. This is indicated by a _stomp_ flag set to _false_.
 2. The backend sends a [Stomp](http://jmesnil.net/stomp-websocket/doc/) event to the client and the _action_ needs to dispatch a _mutation_ without performing an _axios_ call. This is indicated by a _stomp_ flag set to _true_. In this context, a browser notification is spawned by invoking the _spawnNotification_ function.
 
-For the purpose of this article, it is not necessary to understand the whole implementation of this example _action_. Futhermore, it is not required to either know the _Stomp protocol_ nor have knowledge how browser notifications work. All implementation details are not relevant for this article and, thus, skipped. The provided _action_ is a good example of how to isolate such external dependencies and instead concentrate on the actual code that is in scope of the _action_.
+For the purpose of this article, it is not necessary to understand the whole implementation of this example _action_. Futhermore, it is not required to either know the _Stomp protocol_ nor have knowledge how browser notifications work. No implementation details are relevant for the sake of this article and, thus, skipped. The provided _action_ is a good example of how to isolate such external dependencies and instead concentrate on the actual code that is in scope of the _action_.
 
 All in all, the test implementation has to mock external dependencies. Concrete, it has to cope with the _axios_ remote call, the _Vuex commit_ function as well as the _spawnNotification_ function. The following code snippet shows a test implementation that makes use of _Sinon_ to isolate all these dependencies.
 
@@ -480,9 +482,9 @@ it("should spawn a notification and should not perform an ajax call
 });
 ```
 
-After setting up stubs, _state_, and _payload_, this test verifies that the action named &quot;toggleAvailability&quot; spawns a notification but does not perform a remote call. With this kind of unit test I'm not interested in verifying that correct _mutations_ are dispatched (see [testing use case 1](#use-case1)). Therefore, I also use _Sinon_ to mock _commit_ and just pass it as argument to the _action_ function.
+After setting up stubs, _state_, and _payload_, this test verifies that the _action_ named &quot;toggleAvailability&quot; spawns a notification but does not perform a remote call. With this kind of unit test I'm not interested in verifying that correct _mutations_ are dispatched (see [testing use case 1](#use-case1)). Therefore, I also use _Sinon_ to mock _commit_ and just pass it as argument to the _action_ function.
 
-# Jest &ndash; a Mocha Alternative
+# <a name="jest"></a>Jest &ndash; a Mocha Alternative
 
 End of 2017, _Vue.js_'s official [Webpack Template](https://github.com/vuejs-templates/webpack) added support for Facebook's [Jest](https://facebook.github.io/jest/). The installation wizard allows for choosing between _Mocha_ and _Jest_.
 
@@ -512,6 +514,6 @@ Maybe you have the same attitude like me that _actions_ are one of the most impo
 
 ![With the testing approach 100% LOC of Vuex actions can be tested](../images/vuex-testing-code-coverage.png)
 
-Another good thing, if you establish such a testing approach, you also gain a better understanding of _Vuex_ and, thereby, you get a better _Vue_ developer.
+Another good thing, if you establish such a testing approach, is that you also gain a better understanding of _Vuex_. Thereby, you become a better _Vue_ developer.
 
 It would be nice if you let me know what you think about my testing approach in the comments. How do you test your _Vuex_ code?
