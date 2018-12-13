@@ -10,6 +10,8 @@ medium:
 - vue.js
 ---
 
+Please consider my [cross-post on Medium](https://medium.com/@doppelmutzi/eslint-prettier-vue-workflow-46a3cf54332f). This document constitutes the original version of my article. However, I make improvements only on the Medium article.
+
 ### Updates
 
 * **02 February 2018** [Wes Bos](https://twitter.com/wesbos) recorded a nice video about setting up _Visual Studio Code_. I added a small [section on his alternative approach](#wesbos) for inspiration and trouble shooting.
