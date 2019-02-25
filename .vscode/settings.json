@@ -29,5 +29,13 @@
         "typescript",
         "typescriptreact",
         "yml"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#a92f95",
+        "titleBar.inactiveBackground": "#a92f95",
+        "titleBar.inactiveForeground": "#a92f95",
+        "titleBar.activeForeground": "#a92f95",
+        "titleBar.activeBackground": "#a92f95"
+      }
 }
+
