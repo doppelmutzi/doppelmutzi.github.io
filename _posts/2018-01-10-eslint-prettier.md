@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Efficient Code Analyzing and Formatting (for Vue.js) with ESLint and Prettier
-slug: eslint-prettier
+slug: efficient-eslint-prettier-vue-workflow
 date: 2018-01-28
 categories: JavaScript
 medium:
