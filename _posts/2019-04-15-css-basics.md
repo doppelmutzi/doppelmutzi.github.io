@@ -119,6 +119,22 @@ Consider the following examples:
 - selector 1 (0,1,0,0) wins over selector 2 (0,0,0,41)
 - selector 1 (0,2,0,1) wins over selector 2 (0,1,2,15)
 
+Take a look at the following example that consist of two special cases.
+```css
+  * {
+    color: red;
+  }
+
+  h1#title {
+    color: blue;
+  }
+
+  h1 {
+    color: green !important;
+  }
+```
+The universal selector (`*`) has a specificity of (0,0,0,0). The `!important` keyword beats everything, thus use it with care (or better don't use it). In the example, every `h1` element has a green color, even the element with the id `title`. To override such a declaration, your only chance is to specify another declaration with `!important`, so order is relevant.
+
 Over 10 years ago, Andy Clarke published an awesome [article explaining selector specificity through Star Wars](https://stuffandnonsense.co.uk/archives/css_specificity_wars.html).
 
 ![selector specificity explained through star wars](../images/css-basics/starwars.jpg)
@@ -161,4 +177,15 @@ The following [Codepen](https://codepen.io/doppelmutzi/pen/NaOGER?editors=1100) 
 
 CSS stands for _Cascading Style Sheets_, so it is not surprising that the cascade plays an important role. The cascade algorithm calculates the above explained precedence for all CSS declarations. Thereby, it also considers specificity and inheritance to determine which styles are applied to HTML elements.
 
-The slightly simplified algorithm looks like this (for complete details refer [W3C specification](https://www.w3.org/TR/CSS2/cascade.html#cascade)):
+The simplified algorithm looks like this (for complete details refer [W3C specification](https://www.w3.org/TR/CSS2/cascade.html#cascade)):
+
+* Find all declarations that
+
+* Finde alle CSS-Deklarationen, die für ein HTML-Element in Frage kommen könnten.
+* Sortiere diese nach Herkunft (origin) und Gewichtung (weight).
+    * Unter origin ist zu verstehen, wo die CSS-Deklaration spezifiziert wurde (z.B. inline styles direkt am HTML-Element, in externer Datei definierte styles).
+    * Weight zielt auf die Wichtigkeit der Deklaration ab: author styles (d.h. die styles von uns Entwicklern > user styles (styles, die der Benutzer im Browser hinterlegt hat) > browser defaults (d.h. Standardwerte des Browsers)
+    * Bei den author styles gilt: inline styles > styles im Head > externe styles
+    * !importance (z.B. p { color: red !important; }) hat eine höhere Wichtigkeit als normale CSS-Deklarationen.
+* Ermittle für die dazugehörigen Selektoren die Spezifizitäten.
+* Sind zwei CSS-Deklarationen gleich in allen obigen Punkten, so gewinnt diejenige, die als letztes im Dokumentenfluss spezifiziert wurde.
