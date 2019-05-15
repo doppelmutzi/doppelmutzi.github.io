@@ -36,6 +36,8 @@
         "titleBar.inactiveForeground": "#a92f95",
         "titleBar.activeForeground": "#a92f95",
         "titleBar.activeBackground": "#a92f95"
-      }
+      },
+      "vetur.format.enable": false,
+      "editor.formatOnSave": false
 }
 
