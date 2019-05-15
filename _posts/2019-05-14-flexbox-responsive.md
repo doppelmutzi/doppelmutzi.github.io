@@ -18,7 +18,7 @@ Inspired by an article why [flex-grow is weird](https://css-tricks.com/flex-grow
 
 [![Edit Interactive Tool to learn flex-grow](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/qqq3mv5rvw?fontsize=14)
 
-In case this tool is not intuitive for you, this article breaks down different combination of [flex-basis](https://www.w3.org/TR/css-flexbox-1/#flex-basis-property), [flex-grow](https://www.w3.org/TR/css-flexbox-1/#flex-grow-property), and [flex-shrink](https://www.w3.org/TR/css-flexbox-1/#flex-shrink-property) to show how these `flexibility properties` can be leveraged for responsive flexbox layouts.
+In case this tool is not intuitive for you, this article breaks down different combination of [flex-basis](https://www.w3.org/TR/css-flexbox-1/#flex-basis-property), [flex-grow](https://www.w3.org/TR/css-flexbox-1/#flex-grow-property), and [flex-shrink](https://www.w3.org/TR/css-flexbox-1/#flex-shrink-property) to show how these flexibility properties can be leveraged for responsive flexbox layouts.
 
 ## flex-basis
 
@@ -120,7 +120,7 @@ Let's take the last example and specify `max-width` values for both flex items, 
 
 ![flex-grow with max-width properties](../images/flexbox-grow-shrink/flex-grow-max-width.jpg)
 
-As you can see, `max-width` values are respected. That's why flex item 1 does not grow beyond `100px` (it does not scale to `303,333px`). In addition, flex item 2 does not scale beyond `200px`(it does not scale to `196,6666px`).
+As you can see, `max-width` values are respected. That's why flex item 1 does not grow beyond `100px` (it does not scale to `303,333px`). In addition, flex item 2 does not scale beyond `200px` (it does not scale to `196,6666px`).
 
 Finally, let's see how different flex item properties behave.
 

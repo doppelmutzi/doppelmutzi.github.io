@@ -18,13 +18,13 @@
     word-wrap: break-word;
 }
 
-.highlight code {
+.highlight pre code {
     font-family: 'Courier', monospace;
     font-size: 14px;
     color: #999
 }
 
-.highlighter-rouge {
+code.highlighter-rouge {
     background-color: #ffdfce;
     padding: 3px 5px;
     border-radius: 5px;
