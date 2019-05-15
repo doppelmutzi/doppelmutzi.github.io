@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Leveraging flex-grow, flex-shrink, and flex-basis for Responsive Flexbox Designs
+title: Master Flexbox Scaling by Understanding flex-grow, flex-shrink, and flex-basis
 slug: css-flexbox-grow-and-shrink
 date: 2019-04-15
 categories: CSS, flexbox, RWD
@@ -15,8 +15,6 @@ medium:
 Inspired by an article why [flex-grow is weird](https://css-tricks.com/flex-grow-is-weird/), I've developed a [small tool](https://qqq3mv5rvw.codesandbox.io/) to explore how different properties of flex items work separately or in combination. You can reproduce all examples of this article with my tool. I hope you find it useful.
 
 ![Codesandbox for exploring flex item properties](../images/flexbox-grow-shrink/screenshot-codesandbox.jpg)
-
-<iframe src="https://qqq3mv5rvw.codesandbox.io/" title="Interactive Tool to learn flex-grow" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 [![Edit Interactive Tool to learn flex-grow](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/qqq3mv5rvw?fontsize=14)
 
