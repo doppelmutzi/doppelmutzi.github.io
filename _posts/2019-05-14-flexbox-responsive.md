@@ -59,7 +59,8 @@ const flexItem1Width = 500
 const flexItem2Width = 500
 const flexContainerWidth = 500
 // 500 - 500 + 500 = | -500 | = 500px
-const spaceToDistribute = Math.abs(flexContainerWidth - flexItem1Width + flexItem2Width)
+const spaceToDistribute =
+  Math.abs(flexContainerWidth - flexItem1Width + flexItem2Width)
 const flexItem1ShrinkFactor = 4
 const flexItem2ShrinkFactor = 1
 // 5
@@ -67,9 +68,11 @@ const totalShrinkValues = flexItem1ShrinkFactor + flexItem2ShrinkFactor
 // 100px
 const distributionSpot = spaceToDistribute / totalShrinkValues
 // 500px - (4 * 100px) = 100px
-const flexItem1ComputedWidth = flexItem1Width - (flexItem1ShrinkFactor * distributionSpot)
+const flexItem1ComputedWidth =
+  flexItem1Width - (flexItem1ShrinkFactor * distributionSpot)
 // 500px - (1 * 100px) = 400px
-const flexItem2ComputedWidth = flexItem2Width - (flexItem2ShrinkFactor * distributionSpot)
+const flexItem2ComputedWidth =
+  flexItem2Width - (flexItem2ShrinkFactor * distributionSpot)
 ```
 
 Downsizing only happens if required. In the following example, the `flex-basis` values are respected.
@@ -104,9 +107,11 @@ const totalGrowValues = flexItem1GrowFactor + flexItem2GrowFactor
 // 440px / 15 = 29,3333
 const distributionSpot = spaceToDistribute / totalGrowValues
 // 10px + (10 * 29,3333px) = 303,33333px
-const flexItem1ComputedWidth = flexItem1Width + (flexItem1GrowFactor * distributionSpot)
+const flexItem1ComputedWidth =
+  flexItem1Width + (flexItem1GrowFactor * distributionSpot)
 // 50px + (5 * 29,3333px) = 196,6666px
-const flexItem2ComputedWidth = flexItem2Width + (flexItem2GrowFactor * distributionSpot)
+const flexItem2ComputedWidth =
+  flexItem2Width + (flexItem2GrowFactor * distributionSpot)
 ```
 
 ## min-width and max-width
