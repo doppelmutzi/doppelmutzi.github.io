@@ -12,7 +12,7 @@ medium:
   - flex-basis
 ---
 
-Inspired by an article why [flex-grow is weird](https://css-tricks.com/flex-grow-is-weird/), I've developed a [small tool](https://qqq3mv5rvw.codesandbox.io/) to explore how different properties of flex items work separately or in combination. You can reproduce all examples of this article with my tool. I hope you find it useful.
+Inspired by an article why [flex-grow is weird](https://css-tricks.com/flex-grow-is-weird/), I've developed a [small tool (Codesandbox)](https://qqq3mv5rvw.codesandbox.io/) to explore how different properties of flex items work separately or in combination. You can reproduce all examples of this article with my tool. I hope you find it useful.
 
 ![Codesandbox for exploring flex item properties](../images/flexbox-grow-shrink/screenshot-codesandbox.jpg)
 
