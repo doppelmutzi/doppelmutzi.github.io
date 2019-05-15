@@ -18,10 +18,16 @@
     word-wrap: break-word;
 }
 
-code {
+.highlight code {
     font-family: 'Courier', monospace;
     font-size: 14px;
     color: #999
+}
+
+.highlighter-rouge {
+    background-color: #ffdfce;
+    padding: 3px 5px;
+    border-radius: 5px;
 }
 
 // Solarized Light Pygments
