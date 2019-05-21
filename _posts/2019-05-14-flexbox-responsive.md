@@ -130,7 +130,7 @@ In this example, flex item 1 cannot consume its [hypothetical main size](https:/
 
 ## flex Shorthand
 
-Manuel Matuzovic [explains in detail](https://css-tricks.com/flex-grow-is-weird/) why `flex-grow: 1;` is not the same as `flex: 1;`.
+Manuel Matuzovic [explains in detail](https://css-tricks.com/flex-grow-is-weird/) why `flex-grow: 1` is not the same as `flex: 1`.
 
 This is because `flex` is the shorthand for `flex-grow`, `flex-shrink`, and `flex-basis`. It is tricky because you can [use it with one, two, and three values](https://developer.mozilla.org/en-US/docs/Web/CSS/flex#Syntax). E.g., if you use only one value, the other values are implicitly set (e.g., by default values).
 
