@@ -281,7 +281,7 @@ module.exports = {
 
 With the _&quot;plugin:vue/recommended&quot;_ entry in the _extends_ array, a [Vue.js ruleset](https://github.com/vuejs/eslint-plugin-vue#gear-configs) can be added. With this in place, [Vue.js specific rules](https://github.com/vuejs/eslint-plugin-vue#bulb-rules) are used, e.g., enforce valid _v-if_ directives.
 
-In addition to the configuration of a ruleset, _&quot;vue&quot;_ in the _plugins_ array is also necessary for linting _\*.vue_ files. Please note, you only need _eslint-plugin-vue_ to lint _\*.vue_ files. Before _v3_, _eslint-plugin-vue_ needed also [https://github.com/BenoitZugmeyer/eslint-plugin-html](eslint-plugin-html). I mention this, because a lot of guides and snippets want you to use both plugins in combination and this caused me a lot of trouble to get Vue.js support running. Meanwhile, [they are incompatible together](https://github.com/BenoitZugmeyer/eslint-plugin-html#linting-vue-files).
+In addition to the configuration of a ruleset, _&quot;vue&quot;_ in the _plugins_ array is also necessary for linting _\*.vue_ files. Please note, you only need _eslint-plugin-vue_ to lint _\*.vue_ files. Before _v3_, _eslint-plugin-vue_ needed also _eslint-plugin-html_. I mention this, because a lot of guides and snippets want you to use both plugins in combination and this caused me a lot of trouble to get Vue.js support running. Meanwhile, [they are incompatible together](https://github.com/BenoitZugmeyer/eslint-plugin-html#linting-vue-files).
 
 The next picture shows how that Vue.js-specific issues are reported by _ESLint_ by running our _npm script_.
 
