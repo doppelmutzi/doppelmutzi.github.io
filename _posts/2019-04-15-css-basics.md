@@ -203,7 +203,7 @@ Developer tools of modern browsers are very helpful to grasp the concept explain
 
 ![Screenshot of Chrome dev tools with annotations to show how information about inheritance and precedence are visualized](../images/css-basics/annoated-dev-tools.jpg)
 
-This picture constitutes a screenshot of a Codepen with annotations to show why which CSS declaration is applied or not applied by the algorithm. Concrete, the annotations represent the analysis for the `<h2 class=”subline”>Subline</h2>` element (marked by blue arrow).
+This picture constitutes a screenshot of a [Codepen](https://codepen.io/doppelmutzi/pen/yWLbbL) with annotations to show why which CSS declaration is applied or not applied by the algorithm. Concrete, the annotations represent the analysis for the `<h2 class=”subline”>Subline</h2>` element (marked by blue arrow).
 
 # Conclusion and Lessons Learned
 
