@@ -25,7 +25,7 @@ This article expects you to know how to write custom React Hooks. If you are new
 
 The following code snippet constitutes a simple custom React Hook to perform a GET request with Axios. 
 
-```Javascript
+```javascript
 // useFetch.js
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -100,7 +100,7 @@ The custom hook utilizes [axios](https://www.npmjs.com/package/axios) for fetchi
 
 First, take a look at the following [Jest](https://jestjs.io/) test, before we discuss the crucial parts.
 
-```Javascript
+```javascript
 // useFetch.test.js
 import { renderHook } from "@testing-library/react-hooks";
 import axios from "axios";
@@ -132,7 +132,7 @@ test("useFetch performs GET request", async () => {
 
 The implementation of _useFetch_ performs a network request with axios. Therefore, we mock the _GET_ request before we call _useFetch_.
 
-```Javascript
+```javascript
 // ...
 const mock = new MockAdapter(axios);
 // ...
@@ -151,7 +151,7 @@ As you can see, _useFetch_ is wrapped in a [renderHook](https://react-hooks-test
 
 The _renderHook_ call returns a [RenderHookResult](https://react-hooks-testing-library.com/reference/api#renderhook). In our example, we destructure _result_ and _waitForNextUpdate_ from the result object. Let's discuss _result_ first.
 
-```Javascript
+```javascript
 // ...
 const { result, waitForNextUpdate } = renderHook(() =>
   useFetch(url, initialValue)
@@ -166,7 +166,7 @@ _result_ constitutes the [renderHook result](https://react-hooks-testing-library
 
 So far, so good, but how do we do this? Therefore, we need _waitForNextUpdate_.
 
-```Javascript
+```javascript
 // ...
 const { result, waitForNextUpdate } = renderHook(() =>
   useFetch(url, initialValue)
@@ -192,7 +192,7 @@ After `await waitForNextUpdate()` returns we can assert _result.current.data_ to
 
 The following code snippet shows two additional tests. The first one tests if our hook implementation can handle multiple invocations. The second one checks the network error case with the help of _axios-mock-adapter_.
 
-```Javascript
+```javascript
 test("useFetch performs multiple GET requests for different URLs", async () => {
   // fetch 1
   const initialValue = "initial value";
