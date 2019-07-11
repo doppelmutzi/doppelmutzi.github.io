@@ -57,7 +57,7 @@ export default useFetch;
 ```
 
 The following code shows how this custom hook can be used.
-```JavaScript
+```javascript
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles.css";
