@@ -91,9 +91,9 @@ However, I've discovered [react-hooks-testing-library](https://react-hooks-testi
 
 Before you write your tests, you need to install the library along with its peer dependencies as [described in the documentation](https://react-hooks-testing-library.com/setup):
 ```bash
-$ npm install --save-dev @testing-library/react-hooks
-$ npm install react@^16.8.0
-$ npm install --save-dev react-test-renderer@^16.8.0
+$ npm i -D @testing-library/react-hooks
+$ npm i react@^16.8.0
+$ npm i -D react-test-renderer@^16.8.0
 ```
 
 The custom hook utilizes [axios](https://www.npmjs.com/package/axios) for fetching data. We need a way to mock the actual networking. There are many ways to do this. I like [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) making it easy to write tests for successful and failing requests.
