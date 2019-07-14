@@ -21,7 +21,7 @@ You can find the code for the custom hook as well as the corresponding tests in 
 
 # The Custom Hook
 
-This article expects you to know how to write custom React hooks. If you are new to this topic, check out [React's documentation](https://reactjs.org/docs/hooks-custom.html). Another good starting point is to take a look at [awesome-react-hooks](https://github.com/rehooks/awesome-react-hooks),
+This article expects you to know how to write custom React hooks. If you are new to this topic, check out [React's documentation](https://reactjs.org/docs/hooks-custom.html). Another good starting point is to take a look at [awesome-react-hooks](https://github.com/rehooks/awesome-react-hooks).
 
 The following code snippet constitutes a simple custom hook to perform a _GET_ request with _axios_. 
 
@@ -184,9 +184,9 @@ expect(result.current.loading).toBeFalsy();
 _waitForNextUpdate_ allows us to wait for the asynchronous function to return in order to check the response of the network call.
 
 The following extract is from the [lib's documentation](https://react-hooks-testing-library.com/usage/advanced-hooks#async):
-> returns a Promise that resolves the next time the hook renders, commonly when state is updated as the result of an asynchronous action`.
+> [...] returns a Promise that resolves the next time the hook renders, commonly when state is updated as the result of an asynchronous action [...].
 
-After `await waitForNextUpdate()` returns we can safely assert that _result.current.data_ holds data coming from the (mocked) network request. In addition, a state change through calling `setLoading(false)` was performed and, thus, _result.current.loading_ is _false_. 
+After `await waitForNextUpdate()` returns we can safely assert that _result.current.data_ holds data coming from the (mocked) network request. In addition, a state change by calling `setLoading(false)` was performed and, thus, _result.current.loading_ is _false_. 
 
 # Testing More Use Cases
 
@@ -233,7 +233,8 @@ test("useFetch performs multiple GET requests for different URLs", async () => {
   expect(result2.current.loading).toBeFalsy();
 });
 
-test("useFetch sets loading to false and returns inital value on network error", async () => {
+test("useFetch sets loading to false and 
+returns inital value on network error", async () => {
   const mock = new MockAdapter(axios);
 
   const initialValue = [];
