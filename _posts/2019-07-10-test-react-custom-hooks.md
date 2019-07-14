@@ -96,7 +96,11 @@ $ npm i react@^16.8.0
 $ npm i -D react-test-renderer@^16.8.0
 ```
 
-The custom hook utilizes [axios](https://www.npmjs.com/package/axios) for fetching data. We need a way to mock the actual networking. There are many ways to do this. I like [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) making it easy to write tests for successful and failing requests.
+The custom hook utilizes [axios](https://www.npmjs.com/package/axios) for fetching data. We need a way to mock the actual networking. There are many ways to do this. I like [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) making it easy to write tests for successful and failing requests. You need to install these libraries, too.
+```bash
+$ npm i axios
+$ npm i -D axios-mock-adapter
+```
 
 First, take a look at the following [Jest](https://jestjs.io/) test, before we discuss the crucial parts.
 
