@@ -1,13 +1,11 @@
 ---
 layout: post
-title: Yarn Workspaces does not Honor npmrc Location Precedence: Implications and Possible Solutions
+title: Yarn Workspaces does not Honor .npmrc Location Precedence
 
 slug: yarn-workspaces-bug
 date: 2019-10-04
 categories: yarn
-medium:
-  - yarn-workspaces
-  - troubleshooting
+
 ---
 
 Yarn Workspaces has a bug that does not respect the location precedence of .npmrc / .yarnrc files to configure registry settings if you [run a yarn command in a selected workspace](https://yarnpkg.com/lang/en/docs/cli/workspace/). Consider the following situation:
