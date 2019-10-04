@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Yarn Workspaces does not Honor .npmrc Location Precedence
+title: Yarn Workspaces does not Honor .npmrc Location Precedence: Implications and Possible Solutions
 
 slug: yarn-workspaces-bug
 date: 2019-10-04
