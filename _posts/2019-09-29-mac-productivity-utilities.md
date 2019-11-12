@@ -10,8 +10,8 @@ medium:
   - productivity
 ---
 
-Using a mouse or trackpad is a major distraction and flow-breaker for many development tasks, especially programming. 
-I strive for using keyboard shortcuts as much as possible to be more productive while programming. 
+Using a mouse or trackpad is a major distraction and flow-breaker for many development tasks, especially programming.
+I strive for using keyboard shortcuts as much as possible to be more productive while programming.
 
 Out of the box, Mac OS X does not provide many keyboard shortcuts when it comes to window management. As an example, it does not allow to throw a focused window to another space.
 
@@ -36,7 +36,7 @@ TODOS
 - alt cmd ESC
 
 # Alfred
-- launcher
+- launcher / spotlight alternative
 
 # Spectacle &ndash; The missing Window Manager
 
@@ -55,7 +55,6 @@ The following recording gives an impression how Spectacle works. I used the shor
 
 *TODO* Video mit key captures
 
-
 # Amethyst
 
 [Amethyst](https://ianyh.com/amethyst/) constitutes a tiling window manager for Mac OS X. It has some features in common with Spectacle, e.g., increasing and decreasing window sizes by shortcuts. However, as you can see from the screenshot about Amethyst's settings, the tool provides many more useful shortcuts.
@@ -72,9 +71,28 @@ Take a look at the screencast to get a better understanding of Amethyst.
 
 # Contexts
 
+I use [Contexts](https://contexts.co/) primarily for an improved Command-Tab switcher.
 
+![Better Command-Tab Switcher](../images/mac-productivity-utilities/contexts.png)
+
+Contexts adds the ability to select individual windows by using the learned key combos `cmd tab` and `cmd shift tab` (to move up the list). In the settings you can also define other shortcuts for these actions. Additionally, you can also use multiple shortcuts for invoking the window switcher with individual settings, which is not possible with Mac OS default switcher.
+
+![Define multiple shortcuts for window switching](../images/mac-productivity-utilities/contexts-settings.png)
+
+As you can see from the previous screenshot, you can define any number of shortcuts to activate the window switcher and to move the list up and down. What I really like is that you can restrict the list for every shortcut, e.g., only visible spaces.
+
+Another major time safer is Contexts' search capability. Actually, it acts more like a filter of the window list. 
+
+When you have activated the switcher panel, you can just type and thereby filter the list to save moving up and down the list.
+
+![Even faster window selection by searching](../images/mac-productivity-utilities/contexts-search.png).
+
+You can even optimize this workflow by defining a modifier key to activate and use the fast search feature. To switch to a window, press this modifier key and type a few characters from the app name or window title. As you can see from a previous screenshot, on the left-hand side of the switcher panel characters are shown that show you suitable strings for fast search.
+
+TODO: kurzes Video mit aktivierten Tasten
 
 # IDE / Editor
+ggf. anteasern von extra blog post
 
 # Build-in Shortcuts
 
