@@ -13,16 +13,14 @@ medium:
 Using a mouse or trackpad is a major distraction and flow-breaker for many development tasks, especially programming.
 I strive for using keyboard shortcuts as much as possible to be more productive while programming.
 
-Out of the box, Mac OS X does not provide many keyboard shortcuts when it comes to window management. As an example, it does not allow to throw a focused window to another space.
+Out of the box, Mac OS does not provide many keyboard shortcuts when it comes to window management. As an example, it does not allow to move a focused window to another space.
 
-In this article I want to present my curated list of useful Mac tools to manage windows, displays, and spaces (of [Mission Control](https://en.wikipedia.org/wiki/Mission_Control_(macOS))) without a mouse. I hope you retire your mouse after reading this post.
+In this article I want to present my curated list of useful Mac tools to manage windows, displays, and spaces (of [Mission Control](https://en.wikipedia.org/wiki/Mission_Control_(macOS))) without a mouse. I hope you retire your mouse after reading this post 😉.
 
 TODOS
 - Screencasts
 
-# Mission Control / Spaces
-- zwischen Spaces links/rechts navigieren
-- Spaces anzeigen
+
 
 # Other useful Mac OX Shortcuts
 - herunerfahren
@@ -36,18 +34,30 @@ TODOS
 - alt cmd ESC
 
 # Alfred
-- launcher / spotlight alternative
+[Alfred](https://www.alfredapp.com/) is an elite application launcher and utility to search and find files on your machine or on the Web. I use Alfread instead of [Spotlight](https://support.apple.com/en-us/HT204014). The hotkey to open up the launcher panel has been burned into my mind for a long time. Of course, you can define a custom key combo in Alfred's settings.
+
+![](../images/mac-productivity-utilities/alfred-hotkey.png)
+
+Launcher für apps
+Launcher für Web Suche
+Launcher für Dateien Suchen (type open ...)
+
+![](../images/mac-productivity-utilities/alfred-clipboard.png)
+
+TODO animated gif launcher mit key captures
+TODO animated gif clipboard mit key captures
+
+Alfred has many more awesome features like snippets or workflows, which I will not cover here. Take a look at Alfred's [power pack](https://www.alfredapp.com/powerpack/).
 
 # Spectacle &ndash; The missing Window Manager
 
 [Spectacle](https://www.spectacleapp.com/) is an awesome tool that allows for changing the size or position of a particular window. It upgrades Mac OS 
-in a way that you can use keyboard shortcuts to resize or move focused windows of any app. Sophisticated window management by shortcuts is one aspect I have missed from Microsoft Windows when I was working in a project with PCs as development machines.  In my current project 
-I have an environment with two external displays in addition to the built-in display of my Macbook. Spectacle provides 
-customizable shortcuts even for throwing a focused window to another display (`Next Display` and `Previous Display`). 
+in a way that you can use keyboard shortcuts to resize or move focused windows of any app. Sophisticated window management by shortcuts is one aspect I have missed from Microsoft Windows when I was working in a project with PCs as development machines.  In my current project, I have an environment with two external displays in addition to the built-in display of my Macbook. Spectacle provides
+customizable shortcuts even for throwing a focused window to another display (`Next Display` and `Previous Display`).
 
 Besides moving windows from one visible display to another, I highly use shortcuts to resize windows like `Make Larger`, `Make Smaller`, or `Left Half`.
 
-I appreciate Spectacle's simplicity. You have a nice glasses icon in the menu bar to see all window actions along with keyboard shortcuts at a glance. To change them just go to the setting dialog. 
+I appreciate Spectacle's simplicity. You have a nice glasses icon in the menu bar to see all window actions along with keyboard shortcuts at a glance. To change them just go to the setting dialog.
 
 ![Settings of Spectacle](../images/mac-productivity-utilities/spectacle-settings.jpg)
 
@@ -81,7 +91,7 @@ Contexts adds the ability to select individual windows by using the learned key 
 
 As you can see from the previous screenshot, you can define any number of shortcuts to activate the window switcher and to move the list up and down. What I really like is that you can restrict the list for every shortcut, e.g., only visible spaces.
 
-Another major time safer is Contexts' search capability. Actually, it acts more like a filter of the window list. 
+Another major time safer is Contexts' search capability. Actually, it acts more like a filter of the window list.
 
 When you have activated the switcher panel, you can just type and thereby filter the list to save moving up and down the list.
 
@@ -89,11 +99,29 @@ When you have activated the switcher panel, you can just type and thereby filter
 
 You can even optimize this workflow by defining a modifier key to activate and use the fast search feature. To switch to a window, press this modifier key and type a few characters from the app name or window title. As you can see from a previous screenshot, on the left-hand side of the switcher panel characters are shown that show you suitable strings for fast search.
 
+What I also like is that I can remove particular apps from the switcher panel's list, e.g., Mac OS Finder, because I'm not convinced of this tool and use instead an alternative.
+
 TODO: kurzes Video mit aktivierten Tasten
 
-# IDE / Editor
-ggf. anteasern von extra blog post
+# Mac OS Build-in Shortcuts
 
-# Build-in Shortcuts
+There are some shortcuts to use [Mission Control](https://support.apple.com/en-us/HT204100) without a mouse. For me, the most important one is to switch between spaces by pressing `Option right arrow` or `Option left arrow`. To open Mission Control or show spaces bar press `Option arrow up`. To show all windows of an application side by side press `Option arrow down`.
 
-The following Mac OS shortcuts have to be known and used frequently in your daily development work... Cmd W ...
+Of course, the following shortcuts should become second nature if you want to be productive on a Mac. `Command q` quits applications along with all its windows. To close a focused window press `Command w`. To copy and paste things use `Command c` and `Command v`.
+
+Another useful shortcut during my office hours is locking the screen by pressing `Option Command q`.
+
+# KeyCue
+
+If you cannot remember these system shortcuts, you can take a look in the application menu. If a command provides a shortcut, you can find it on the right side of the menu entry. An even faster approach is to use [KeyCue](https://www.ergonis.com/products/keycue/). It's a useful tool to show all shortcuts of the current application which is currently in focus along with system shortcuts. The goal of KeyCue is to find, remember, and learn keyboard shortcuts. 
+
+![Find, remenber, and learn shortcuts with KeyCue](../images/mac-productivity-utilities/keycue.png)
+
+You can show the list of shortcuts for a focused app from the keyboard. As an example, I configured KeyCue to show the list by pressing `Command` key for 1.5 seconds.
+
+![Activate KeyCue with hotkeys](../images/mac-productivity-utilities/keycue-settings.png)
+
+
+# Summary
+
+Hinweis das jedes Tool noch viel mehr Features hat
