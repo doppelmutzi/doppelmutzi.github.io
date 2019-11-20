@@ -90,11 +90,11 @@ What I also like is that I can remove particular apps from the switcher panel's 
 
 # macOS Build-in Shortcuts
 
-There are some shortcuts to use [Mission Control](https://support.apple.com/en-us/HT204100) without a mouse. For me, the most important one is to switch between spaces by pressing **⌥ ←** or **⌥ →**. To open Mission Control or show its spaces bar press **⌥ ↑**. To show all windows of an application side by side press **⌥ ↓**.
+There are some shortcuts to use [Mission Control](https://support.apple.com/en-us/HT204100) without a mouse. For me, the most important one is to switch between spaces by pressing **⌃ ←** or **⌃ →**. To open Mission Control or show its spaces bar press **⌃ ↑**. To show all windows of an application side by side press **⌃ ↓**.
 
 Of course, the following shortcuts should become second nature if you want to be productive on a Mac. **⌘ Q** quits applications along with all its windows. To close a focused window press **⌘ W**. To copy and paste things use **⌘ C** and **⌘ V**.
 
-Another useful shortcut during my office hours is locking the screen by pressing **⌥ ⌘ Q**. In addition, a useful shortcut to kill none-responding applications is **⌥ ⌘ ESC**.
+Another useful shortcut during my office hours is locking the screen by pressing **⌃ ⌘ Q**. In addition, a useful shortcut to kill none-responding applications is **⌥ ⌘ ESC**.
 
 # KeyCue &ndash; Shortcus Always at a Glance
 
