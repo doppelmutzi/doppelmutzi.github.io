@@ -108,7 +108,7 @@ A nice feature of VSCode is to [add recommended extensions to your project](http
 
 For your colleagues it then looks like this.
 
-![Nahaufnahme der Vortragsbühne](../images/react-eslint-prettier-vscode/recommended-extensions.png)
+![VSCode recommended extensions](../images/react-eslint-prettier-vscode/recommended-extensions.png)
 
 # Setup Format on Save
 
