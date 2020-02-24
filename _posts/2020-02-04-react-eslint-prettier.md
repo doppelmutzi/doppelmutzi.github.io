@@ -137,7 +137,7 @@ At the latest after a restart of VSCode format on save should work as expected f
 # Demo Project
 
 You can check out my demo project to see all this in action. Just perform the following steps:
-- [clone](git@github.com:doppelmutzi/eslint-prettier-vscode-react.git) the project
+- [clone](https://github.com/doppelmutzi/eslint-prettier-vscode-react.git) the project
 - install the dependencies
 ```bash
 $ npm install
