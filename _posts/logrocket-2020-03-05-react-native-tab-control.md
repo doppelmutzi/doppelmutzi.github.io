@@ -76,7 +76,7 @@ const TabControl = ({ values, onChange, renderSeparators }) => {
       <SegmentedControl
         values={values}
         selectedIndex={selectedIndex}
-        onTabPress={handleIndexChange}
+        onIndexChange={handleIndexChange}
         renderSeparators={renderSeparators}
       />
     </View>
@@ -142,18 +142,20 @@ export default StyleSheet.create({
 
 Concrete values for colors, spacing or fonts are defined in the imported `theme.js` file. As an example, `theme.fontSize.l` assigns a large font size.
 
-The interface that is also part of the corresponding iOS styles file (`iOSTabControlStyles.js`) can you see next.
+The stylesheet object for iOS has the same structure (`iOSTabControlStyles.js`). Of course, the values are different. The following prop type shows the "interface".
 
 ```javascript
-export default StyleSheet.create({
-  tabsContainerStyle: {},
-  tabStyle: {},
-  tabTextStyle: {},
-  activeTabStyle: {},
-  activeTabTextStyle: {},
-  firstTabStyle: {},
-  lastTabStyle: {}
-});
+  import { ViewPropTypes } from "react-native";
+  // ...
+  const styleShape = PropType.shape({
+    tabsContainerStyle: ViewPropTypes.styles,
+    tabStyle: ViewPropTypes.styles,
+    tabTextStyle: ViewPropTypes.styles,
+    activeTabStyle: ViewPropTypes.styles,
+    activeTabTextStyle: ViewPropTypes.styles,
+    firstTabStyle: ViewPropTypes.styles,
+    lastTabStyle: ViewPropTypes.styles
+  });
 ```
 
 The `TabControl` component assumes that these properties exist on the stylesheet object. For reasons of clarity I skip the details of the iOS stylesheet object.
@@ -174,7 +176,7 @@ const TabControl = ({ values, onChange, renderSeparators }) => {
       <SegmentedControl
         values={values}
         selectedIndex={selectedIndex}
-        onTabPress={handleIndexChange}
+        onIndexChange={handleIndexChange}
         renderSeparators={renderSeparators}
       />
     </View>
@@ -188,7 +190,7 @@ The component renders a `SegmentedControl` component inside of a container with 
 function SegmentedControl({
   values: tabValues,
   selectedIndex,
-  onTabPress,
+  onIndexChange,
   renderSeparators,
 }) {
   return (
@@ -201,7 +203,7 @@ function SegmentedControl({
         <Tab
           label={tabValue}
           onPress={() => {
-            onTabPress(index);
+            onIndexChange(index);
           }}
           isActive={selectedIndex === index}
           isFirst={index === 0}
@@ -495,6 +497,83 @@ const IosTab = ({
 
 Based on the value of the boolean flag `renderLeftSeparator`, the vertical separator element is rendered (vertically centered, 50% height of the container) on the left side of the `TouchableWithoutFeedback` component. As with the Android tab, the `children` prop gets wrapped by an ordinary `View` component that gets styled.
 
+## Contribute even more to the native user experience
+
+Besides things like [TouchableHighlight](https://reactnative.dev/docs/touchablehighlight) or [TouchablenativeFeedback](https://reactnative.dev/docs/touchablenativefeedback) (for ripple effects on Android) there even more possibilities to improve the native look and feel. As an example, with [Expo Haptics](https://docs.expo.io/versions/latest/sdk/haptics/#hapticsnotificationasynctype) it is possible to add haptic touch feedback for iOS and Android (vibration). In my app, I just have to add one line in the `onPress` callback of the `SegmentedControl` component. That's it. Pretty cool, huh?
+
+```javascript
+  import * as Haptics from "expo-haptics";
+  // ...
+  <Tab
+    label={tabValue}
+    onPress={() => {
+      onIndexChange(index);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }}
+    // ...
+    >
+  // ...
+```
+
+But wait, there are more cool things possible. As with Apple Maps, you can also swipe left and right to change the active tab. With [react-native-gesture-handler](https://software-mansion.github.io/react-native-gesture-handler/) it is possible to extend our component to have swipe capabilities on iOS. Therefore, I have to extend the `Container` component a bit.
+
+```javascript
+import { PanGestureHandler } from "react-native-gesture-handler";
+// ...
+function Container({
+  children,
+  numberValues,
+  style,
+  activeTabIndex,
+  onIndexChange // this callback is passed by SegmentedControl
+}) {
+  // ...
+  useEffect(() => {
+    // ...
+  }, [containerWidth, activeTabIndex]);
+
+  const onGestureEvent = evt => {
+    const tabWidth = containerWidth / numberValues;
+    let index = Math.floor(evt.nativeEvent.x / tabWidth);
+    if (index > numberValues - 1) index = numberValues - 1;
+    else if (index < 0) index = 0;
+    if (index !== activeTabIndex) {
+      onIndexChange(index);
+    }
+  };
+
+  return isIos ? (
+    <PanGestureHandler onGestureEvent={onGestureEvent}>
+      <View style={[
+          {
+            marginHorizontal: margin,
+            flexDirection: "row",
+            position: "relative"
+          },
+          tabsContainerStyle
+        ]}
+        onLayout={event => {
+          setContainerWidth(event.nativeEvent.layout.width);
+        }}>
+        // ...
+      </View>
+    </PanGestureHandler>
+  ) : (
+    // Android
+  );
+}
+```
+
+We wrap the JSX code for the iOS version (i.e., the first expression of the ternary operator) in a `PanGestureHandler`. The `onGestureEvent` function is called, whenever the user performs a swipe gesture. In this function we calculate the new index and invoke the `onIndexChange` callback. The callback function needs to be passed by `SegmentedControl`. In the previous version, this was not required because the index was changed only by tap (and therefore the `activeTabIndex` was sufficient).
+
+```javascript
+const tabWidth = containerWidth / numberValues;
+let index = Math.floor(evt.nativeEvent.x / tabWidth);
+```
+
+We utilize the [x property of PanGestureHandler](https://software-mansion.github.io/react-native-gesture-handler/docs/handler-pan.html#x) that constitutes the coordinate of the current position of the finger relative our `Container` component. With this information and the tab width, we can calculate the new index.
+
+
 ## Technical hurdles and possible further development
 
 I have not succeeded to combine "iOS Variant 2 and 3" ( take a look at the animated gif above). As you can see with Apple Maps, you have a motion animation while switching the tabs and a scaling animation (i.e., the tab shrinks a bit) on tap. You are welcome to try it out with my [Github project](https://github.com/doppelmutzi/react-native-tab-control). With my approach based on absolute positioning, I had a layering problem (`z-index`) in a way that the tab was not positioned below the tab label. Here is the code for the iOS variant with a scaling animation. If you have an idea how to combine both variants, please let me know in the comments section.
@@ -551,8 +630,6 @@ const IosScaleTab = ({
 ```
 
 Again, this animation is implemented with the `Animated` API. With the help of the  `interpolate` function, we change the `scale` value of the `transform` style property over a duration of 50 milliseconds from 100% to 95% (see `outputRange`). These animation styles (`transformStyle`) are only applied if the tab is active. I use `Easing.linear` as an easing function over the `inputRange` consisting of three values. The whole animation is kicked off with the `onPressIn` prop of the `TouchableWithoutFeedback` component. If the user stops pressing, the `onPressOut` callback is called which animates the size of the active tab back to its original size. As you can see with the `timingProps` object, for this animation the native driver (`useNativeDriver: true`) can be utilized to improve performance. Unfortunately, this was not possible with our movement animation, where the `left` property is changed over time.
-
-Further development for the iOS version of the component could be to add swipe capability. As with Apple Maps, you can also swipe left and right to change the active tab.
 
 ## Existing libraries
 
