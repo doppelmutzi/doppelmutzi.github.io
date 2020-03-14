@@ -1,4 +1,4 @@
-# How to Develop a Tab Control Component with React Native
+# Building a Tab Control Component for iOS and Android with React Native
 
 A tab control is a crucial component of mobile apps. It enables users to navigate between screens or makes different parts of content on a screen accessible by switching between views.
 
@@ -20,26 +20,26 @@ The following animated gif demonstrate the tab control that is subject of this a
 
 ![This demo shows how the component looks like on iOS and Android](../images/react-native-tab-control/demo.gif)
 
-I want to focus on the important aspects of developing such a component. For this reason, I have broken the example down to the essentials. With respect to segmented control, I implemented a version using a motion animation as interaction concept to visualize the transition between active tabs. In the animated gif above you can watch how this UX pattern looks like (“iOS Variant: Motion Animation”). You can find the code in my [Github project](https://github.com/doppelmutzi/expo-snack-RN-tab-control) or you can have quick access via my [Expo Snack](https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios)).
+I want to focus on the important aspects of developing such a component. For this reason, I have broken the example down to the essentials. With respect to segmented control, I implemented a version using a motion animation as interaction concept to visualize the transition between active tabs. In the animated gif above you can watch how this UX pattern looks like (“iOS Variant: Motion Animation”). You can find the code in my [Github project](https://github.com/doppelmutzi/expo-snack-RN-tab-control) or you can have quick access via my [Expo Snack](https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab-layout-on-android)).
 
-https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios)?session_id=snack-session-pCogqgAbL&preview=true&platform=web&iframeId=r44u653wz8&theme=light
+https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab-layout-on-android)?session_id=snack-session-pCogqgAbL&preview=true&platform=web&iframeId=r44u653wz8&theme=light
 
 The interface of the `TabControl` component looks like this.
 
 ```javascript
-    <TabControl
-      values={["Giannis", "LeBron", "Luka"]}
-      onChange={value => {
-        if (value === "Giannis") {
-          setImgSource(sourceUriGiannis);
-        } else if (value === "LeBron") {
-          setImgSource(sourceUriLeBron);
-        } else {
-          setImgSource(sourceUriLuka);
-        }
-      }}
-      renderSeparators={showSeparatorsIos}
-    />
+<TabControl
+  values={["Giannis", "LeBron", "Luka"]}
+  onChange={value => {
+    if (value === "Giannis") {
+      setImgSource(sourceUriGiannis);
+    } else if (value === "LeBron") {
+      setImgSource(sourceUriLeBron);
+    } else {
+      setImgSource(sourceUriLuka);
+    }
+  }}
+  renderSeparators={showSeparatorsIos}
+/>
 ```
 
 You have to pass in an array of `values` that are rendered as tab labels. The `onChange` prop is called when the user taps on a tab. The callback function gets the label of the active tab. In the demo project, I used the value to set the image source (`setImgSource`) in order to change the background image whenever the user presses a tab.
@@ -81,6 +81,7 @@ const TabControl = ({ values, onChange, renderSeparators }) => {
       />
     </View>
   );
+};
 ```
 
 I utilized React Native's `Platform` API to render the component differently on both mobile platforms. I created a tiny helper function (`isIos`) to perform platform checks throughout the component.
@@ -158,7 +159,7 @@ The stylesheet object for iOS has the same structure (`iOSTabControlStyles.js`).
   });
 ```
 
-The `TabControl` component assumes that these properties exist on the stylesheet object. For reasons of clarity I skip the details of the iOS stylesheet object.
+`TabControl` component assumes that these properties exist on the stylesheet object. For reasons of clarity I skip the details of the iOS stylesheet object.
 
 `TabControl` is a stateful component that stores the selected index (`selectedIndex`). In addition, it defines a function (`handleIndexChange`) to change the selected index and invokes the passed `onChange` callback (in our case to change the background image).
 
@@ -310,102 +311,102 @@ The easy part is the Android version (the second expression of the ternary opera
 The iOS version is more complex.
 
 ```javascript
-  // ...
-  const [moveAnimation] = useState(new Animated.Value(0));
-  const [containerWidth, setContainerWidth] = useState(0);
+// ...
+const [moveAnimation] = useState(new Animated.Value(0));
+const [containerWidth, setContainerWidth] = useState(0);
 
-  useEffect(() => {
-    const leftVal = (containerWidth / numberValues) * activeTabIndex;
-    Animated.timing(moveAnimation, {
-      toValue: leftVal,
-      duration: 250
-      // not supported by native animated module
-      // useNativeDriver: true
-    }).start();
-  }, [containerWidth, activeTabIndex]);
+useEffect(() => {
+  const leftVal = (containerWidth / numberValues) * activeTabIndex;
+  Animated.timing(moveAnimation, {
+    toValue: leftVal,
+    duration: 250
+    // not supported by native animated module
+    // useNativeDriver: true
+  }).start();
+}, [containerWidth, activeTabIndex]);
 
-  return isIos ? (
-    <View
-      style={[
-        {
-          marginHorizontal: margin,
-          flexDirection: "row",
-          position: "relative"
-        },
-        tabsContainerStyle
-      ]}
-      onLayout={event => {
-        setContainerWidth(event.nativeEvent.layout.width);
+return isIos ? (
+  <View
+    style={[
+      {
+        marginHorizontal: margin,
+        flexDirection: "row",
+        position: "relative"
+      },
+      tabsContainerStyle
+    ]}
+    onLayout={event => {
+      setContainerWidth(event.nativeEvent.layout.width);
+    }}
+  >
+    <Animated.View
+      style={{
+        width: containerWidth / numberValues,
+        left: moveAnimation,
+        top: iosTabVerticalSpacing,
+        bottom: iosTabVerticalSpacing,
+        position: "absolute",
+        ...tabStyle,
+        ...activeTabStyle
       }}
-    >
-      <Animated.View
-        style={{
-          width: containerWidth / numberValues,
-          left: moveAnimation,
-          top: iosTabVerticalSpacing,
-          bottom: iosTabVerticalSpacing,
-          position: "absolute",
-          ...tabStyle,
-          ...activeTabStyle
-        }}
-      ></Animated.View>
-      {children}
-    </View>
-  ) : (
-    // Android version
-  )
+    ></Animated.View>
+    {children}
+  </View>
+) : (
+  // Android version
+)
 ```
 
 I decided to use two state objects to manage the animation. `containerWidth` holds the width of the container object. `setContainerWidth` is called inside the callback function assigned to `View`'s `onLayout` prop. `event.nativeEvent.layout.width` returns the actual width of the component. The array assigned to the `style` prop looks very similar to the Android version as described above. The only difference is `position: "relative"` because the implementation of the active tab animation (`Animated.View`) uses absolute positioning.
 
 ```javascript
 <View
-      style={[
-        {
-          marginHorizontal: margin,
-          flexDirection: "row",
-          position: "relative"
-        },
-        tabsContainerStyle
-      ]}
-      onLayout={event => {
-        setContainerWidth(event.nativeEvent.layout.width);
-      }}
-    >
-    <Animated.View>
-      // ...
-    </Animated.View>
-    {children}
-  </View>
+    style={[
+      {
+        marginHorizontal: margin,
+        flexDirection: "row",
+        position: "relative"
+      },
+      tabsContainerStyle
+    ]}
+    onLayout={event => {
+      setContainerWidth(event.nativeEvent.layout.width);
+    }}
+  >
+  <Animated.View>
+    // ...
+  </Animated.View>
+  {children}
+</View>
 ```
 
 [Animated](https://reactnative.dev/docs/animated) is React Native's animation library. `Animated.View` is an enhanced `View` component positioned absolutely in the relatively positioned parent component. It does not have any children because the only purpose is to have a styled component with background color and rounded corners that is animated on the horizontal axis by updating the `left` property. `width` is calculated dynamically based on the number of tabs (i.e., `numberValues`) and the container's width (`containerWidth`). `top` and `bottom` is used to add some vertical spacing.  
 
 ```javascript
-  <Animated.View
-    style={{
-      width: containerWidth / numberValues,
-      left: moveAnimation,
-      top: iosTabVerticalSpacing,
-      bottom: iosTabVerticalSpacing,
-      position: "absolute",
-      ...tabStyle,
-      ...activeTabStyle
-    }}>
-  </Animated.View>
-  {children}
+<Animated.View
+  style={{
+    width: containerWidth / numberValues,
+    left: moveAnimation,
+    top: iosTabVerticalSpacing,
+    bottom: iosTabVerticalSpacing,
+    position: "absolute",
+    ...tabStyle,
+    ...activeTabStyle
+  }}>
+</Animated.View>
+{children}
 ```
 
 Finally, we have to take a look at the `useEffect` hook where the value of the `left` prop is calculated and then used by the animation (`Animated.timing()`).
 
 ```javascript
-  useEffect(() => {
-    const leftVal = (containerWidth / numberValues) * activeTabIndex;
-    Animated.timing(moveAnimation, {
-      toValue: leftVal,
-      duration: 250
-    }).start();
-  }, [containerWidth, activeTabIndex]);
+useEffect(() => {
+  const leftVal = (containerWidth / numberValues) * activeTabIndex;
+  Animated.timing(moveAnimation, {
+    toValue: leftVal,
+    duration: 250
+  }).start();
+}, [containerWidth, activeTabIndex]);
 ```
 
 As you can see, useEffect's dependency array contains `containerWidth` and `activeTabIndex` (`numberValues` does not change). Whenever one of these values change, the animation is updated and the active tab indicator component moves on the horizontal axis within 250 milliseconds to the new position.
@@ -457,7 +458,7 @@ If the tab is active, additional styles are added (`activeTabTextStyle`). The co
 
 `OsSpecificTab` is pretty simple, it just renders an `IosTab` or `AndroidTab` component and assigns all props to it.
 
-Finally, let's take a look at the actual tab implementations. The implementation of `AnroidTab` utilizes [TouchableNativeFeedback](todo), which is an Android-only API to add a native look and feel. Instead of an odd-looking colored background, we assign a ripple effect to the `background` prop. The `child` container is a ordinary `View` component that gets styled (`tabControlStyle`).
+Finally, let's take a look at the actual tab implementations. The implementation of `AnroidTab` utilizes [TouchableNativeFeedback](https://reactnative.dev/docs/touchablenativefeedback), which is an Android-only API to add a native look and feel. Instead of an odd-looking colored background, we assign a ripple effect to the `background` prop. The `child` container is a ordinary `View` component that gets styled (`tabControlStyle`).
 
 ```javascript
 const AndroidTab = ({ children, style: tabControlStyle, onPress }) => (
@@ -502,17 +503,17 @@ Based on the value of the boolean flag `renderLeftSeparator`, the vertical separ
 Besides things like [TouchableHighlight](https://reactnative.dev/docs/touchablehighlight) or [TouchablenativeFeedback](https://reactnative.dev/docs/touchablenativefeedback) (for ripple effects on Android) there even more possibilities to improve the native look and feel. As an example, with [Expo Haptics](https://docs.expo.io/versions/latest/sdk/haptics/#hapticsnotificationasynctype) it is possible to add haptic touch feedback for iOS and Android (vibration). In my app, I just have to add one line in the `onPress` callback of the `SegmentedControl` component. That's it. Pretty cool, huh?
 
 ```javascript
-  import * as Haptics from "expo-haptics";
+import * as Haptics from "expo-haptics";
+// ...
+<Tab
+  label={tabValue}
+  onPress={() => {
+    onIndexChange(index);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+  }}
   // ...
-  <Tab
-    label={tabValue}
-    onPress={() => {
-      onIndexChange(index);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    }}
-    // ...
-    >
-  // ...
+  >
+// ...
 ```
 
 But wait, there are more cool things possible. As with Apple Maps, you can also swipe left and right to change the active tab. With [react-native-gesture-handler](https://software-mansion.github.io/react-native-gesture-handler/) it is possible to extend our component to have swipe capabilities on iOS. Therefore, I have to extend the `Container` component a bit.
@@ -572,7 +573,6 @@ let index = Math.floor(evt.nativeEvent.x / tabWidth);
 ```
 
 We utilize the [x property of PanGestureHandler](https://software-mansion.github.io/react-native-gesture-handler/docs/handler-pan.html#x) that constitutes the coordinate of the current position of the finger relative our `Container` component. With this information and the tab width, we can calculate the new index.
-
 
 ## Technical hurdles and possible further development
 
@@ -641,7 +641,7 @@ During the preparation of this article, I searched for existing React Native lib
 
 A nice tab view component is also available by the [React Native Community](https://github.com/react-native-community/react-native-tab-view). Once again, the component is designed according to Android Material Design guidelines and looks similar on both OS.
 
-During my research I have not found an example for a segmented control implementation, which is based on iOS 13 design. The following components are inspired by iOS 12. Until recently, React Native team offered a [segmented control component for iOS](https://reactnative.dev/docs/segmentedcontrolios). However, this component is deprecated. Instead, they recommend to use  [@react-native-community/segmented-control](https://github.com/react-native-community/segmented-control). At the time of this writing, the component only offers a iOS 12 design. [Nachos UI Kit](https://avocode.com/nachos-ui/docs/#!/Showcase/SegmentedControlButton) provides a rudimentary segmented control component. The following Github projects implemented segmented control components. However, it appears that some of these projects are no longer maintained.
+During my research I have not found an example for a segmented control implementation, which is based on iOS 13 design. The following components are inspired by iOS 12. Until recently, React Native team offered a [segmented control component for iOS](https://reactnative.dev/docs/segmentedcontrolios). However, this component is deprecated. Instead, they recommend to use  [@react-native-community/segmented-control](https://github.com/react-native-community/segmented-control). At the time of this writing, the component only offers a iOS 12 design. [Nachos UI Kit](https://avocode.com/nachos-ui/docs/#!/Showcase/SegmentedControlButton) provides a rudimentary segmented control component. The following Github projects implemented segmented control components. However, it appears that some of these projects are no longer maintained:
 
 - [react-native-segmented-control-tab](https://github.com/kirankalyan5/react-native-segmented-control-tab)
 - [react-native-segmented-view](https://github.com/lelandrichardson/react-native-segmented-view)
