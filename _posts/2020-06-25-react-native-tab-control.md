@@ -48,7 +48,7 @@ https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab
 
 The interface of the `TabControl` component looks like this.
   
-```Javascript
+```javascript
     <TabControl
       values={["Giannis", "LeBron", "Luka"]}
       onChange={value => {
@@ -68,7 +68,7 @@ You have to pass in an array of `values` that are rendered as tab labels. The `o
 
 Let's drill into the implementation details of the `TabControl` component.
 
-```Javascript
+```javascript
     import {
       // ...
       Platform
@@ -101,7 +101,7 @@ Let's drill into the implementation details of the `TabControl` component.
 
 I utilized React Native's Platform API to render the component differently on both mobile platforms. I created a boolean variable (`isIos`) to easily perform platform checks throughout the component.
 
-```Javascript
+```javascript
     import iosTabControlStyles from "./iOSTabControlStyles";
     import androidTabControlStyles from "./androidTabControlStyles";
     const isIos = Platform.OS === "ios";
@@ -115,7 +115,7 @@ With the `wrapperStyles` object, you can see how I define different style proper
 
 Depending on the platform, `iOSTabControlStyles` or `androidTabControlStyles` are assigned to `tabControlStyles`. This object holds the actual styles and is accessed from different parts throughout the component. The idea behind this concept is that both imported style objects have the same "interface." Let's take a look at the Android styles (`androidTabControlStyles.js`).
 
-```Javascript
+```javascript
     import { StyleSheet } from "react-native";
     import theme from "../theme";
     const { tabsContainerColor, borderColor, activeTextColor } = theme.color;
@@ -153,7 +153,7 @@ Concrete values for colors, spacing, or fonts are defined in the imported `theme
 
 The stylesheet object for iOS has the same structure (`iOSTabControlStyles.js`). Of course, the values are different. The following prop type shows the "interface."
 
-```Javascript
+```javascript
       import { ViewPropTypes } from "react-native";
       // ...
       const styleShape = PropType.shape({
@@ -171,7 +171,7 @@ The `TabControl` component assumes that these properties exist on the stylesheet
 
 `TabControl` is a stateful component that stores the selected index (`selectedIndex`). In addition, it defines a function (`handleIndexChange`) to change the selected index and invokes the passed `onChange` callback — in our case, to change the background image.
 
-```Javascript
+```javascript
     const TabControl = ({ values, onChange, renderSeparators }) => {
       const [selectedIndex, setSelectedIndex] = useState(0);
       const handleIndexChange = index => {
@@ -197,7 +197,7 @@ The component renders a `SegmentedControl` component inside of a container with 
 
 `SegmentedControl` is responsible to render a `Tab` component for every entry of the `tabValues` array. 
 
-```Javascript
+```javascript
     function SegmentedControl({
       values: tabValues,
       selectedIndex,
@@ -238,7 +238,7 @@ I’ll skip the implementation detail of the function `shouldRenderLeftSeparator
 
 The `Container` component renders differently on iOS and Android. Of course, the `children` prop constitutes the map of `Tab` components. `numberValues` and `activeTabIndex` are used to calculate the new state of the animation.
 
-```Javascript
+```javascript
     function Container({
       children,
       numberValues,
@@ -306,7 +306,7 @@ The easy part is the Android version (the second expression of the ternary opera
 
 `tabsContainerStyle` is destructured from the passed `style` prop and defines the background color and height of the container component (`androidTabControlStyles.js`).
 
-```Javascript
+```javascript
     return isIos ? (
         // iOS version / animation code
       ) : (
@@ -324,7 +324,7 @@ The easy part is the Android version (the second expression of the ternary opera
 
 The iOS version is more complex.
 
-```Javascript
+```javascript
     // ...
       const [moveAnimation] = useState(new Animated.Value(0));
       const [containerWidth, setContainerWidth] = useState(0);
@@ -373,7 +373,7 @@ I decided to use two state objects to manage the animation. `containerWidth` hol
 
 The array assigned to the `style` prop looks very similar to the Android version as described above. The only difference is `position: "relative"` because the implementation of the active tab animation (`Animated.View`) uses absolute positioning.
 
-```Javascript
+```javascript
     <View style={[
         {
           marginHorizontal: margin,
@@ -398,7 +398,7 @@ It does not have any children because the only purpose is to have a styled compo
 
 `width` is calculated dynamically based on the number of tabs (`numberValues`) and the container's width (`containerWidth`). `top` and `bottom` are used to add some vertical spacing. 
 
-```Javascript
+```javascript
     <Animated.View
       style={{
         width: containerWidth / numberValues,
@@ -415,7 +415,7 @@ It does not have any children because the only purpose is to have a styled compo
 
 Finally, we have to take a look at the `useEffect` Hook, where the value of the `left` prop is calculated and then used by the animation (`Animated.timing()`).
 
-```Javascript
+```javascript
     useEffect(() => {
       const leftVal = (containerWidth / numberValues) * activeTabIndex;
       Animated.timing(moveAnimation, {
@@ -431,7 +431,7 @@ As you can see, `useEffect`'s dependency array contains `containerWidth` and `ac
 
 Next is the `Tab` component that renders for both operating systems a `Text` component with its associated styles (`tabTextStyle`).
 
-```Javascript
+```javascript
     function Tab({
       label,
       onPress,
@@ -483,7 +483,7 @@ Finally, let's take a look at the actual tab implementations. The implementation
 
 Instead of an odd-looking colored background, we assign a ripple effect to the `background` prop. The `child` container is an ordinary `View` component that gets styled (`tabControlStyle`).
 
-```Javascript
+```javascript
     const AndroidTab = ({ children, style: tabControlStyle, onPress }) => (
       <TouchableNativeFeedback
         onPress={onPress}
@@ -495,7 +495,7 @@ Instead of an odd-looking colored background, we assign a ripple effect to the `
 
 `IosTab` looks a bit different.
 
-```Javascript
+```javascript
     const IosTab = ({
       children,
       style: tabControlStyle,
@@ -527,7 +527,7 @@ Besides things like [TouchableHighlight](https://reactnative.dev/docs/touchableh
 
 In my app, I just have to add one line in the `onPress` callback of the `SegmentedControl` component. That's it. Pretty cool, huh?
 
-```Javascript
+```javascript
     import * as Haptics from "expo-haptics";
     // ...
     <Tab
@@ -543,7 +543,7 @@ In my app, I just have to add one line in the `onPress` callback of the `Segment
 
 But wait — there are more cool things possible. As with Apple Maps, you can also swipe left and right to change the active tab. With [react-native-gesture-handler](https://software-mansion.github.io/react-native-gesture-handler/), it is possible to extend our component to have swipe capabilities on iOS. Therefore, I have to extend the `Container` component a bit.
 
-```Javascript
+```javascript
     import { PanGestureHandler } from "react-native-gesture-handler";
     // ...
     function Container({
@@ -592,9 +592,10 @@ We wrap the JSX code for the iOS version (i.e., the first expression of the tern
 
 In this function, we calculate the new index and invoke the `onIndexChange` callback. The callback function needs to be passed by `SegmentedControl`. In the previous version, this was not required because the index was changed only by tap, and therefore, the `activeTabIndex` was sufficient.
 
-
+```javascript
     const tabWidth = containerWidth / numberValues;
     let index = Math.floor(evt.nativeEvent.x / tabWidth);
+```
 
 We utilize the [x property of PanGestureHandler](https://software-mansion.github.io/react-native-gesture-handler/docs/handler-pan.html#x) that constitutes the coordinate of the current position of the finger relative to our `Container` component. With this information and the tab width, we can calculate the new index.
 
@@ -604,7 +605,7 @@ I have not succeeded to combine "iOS Variant 2 and 3" (take a look at the animat
 
 You are welcome to try it out with my [Github project](https://github.com/doppelmutzi/react-native-tab-control). With my approach based on absolute positioning, I had a layering problem (`z-index`) in a way that the tab was not positioned below the tab label. Here is the code for the iOS variant with a scaling animation. If you have an idea how to combine both variants, please let me know in the comments section.
 
-```Javascript
+```javascript
     const IosScaleTab = ({
       isActive,
       children,
@@ -691,4 +692,3 @@ As you can see, the more complex part is the iOS version of this component. Sinc
 In comparison to a native implementation, there are, of course, a few shortcomings with this approach. Implementing and maintaining different designs for every OS version is hard (e.g., the look and feel of the segmented control on iOS 12 and iOS 13 is different). I don't think that's necessary. However, in the end, it depends on the project!
 
 Do you think it would be useful if I developed a library on GitHub based on the concepts described in this article? Let me know what you think.
-
