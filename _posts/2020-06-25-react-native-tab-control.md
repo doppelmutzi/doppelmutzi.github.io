@@ -273,6 +273,7 @@ The `Container` component renders differently on iOS and Android. Of course, the
           }}
         >
           <Animated.View
+            {% raw %}
             style={{
               // works too
               // width: `${100 / numberValues}%`,
@@ -284,6 +285,7 @@ The `Container` component renders differently on iOS and Android. Of course, the
               ...tabStyle,
               ...activeTabStyle
             }}
+            {% endraw %}
           ></Animated.View>
           {children}
         </View>
