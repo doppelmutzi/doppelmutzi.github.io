@@ -13,12 +13,12 @@ A tab control is a crucial component for mobile apps. It enables users to naviga
 
 As a mobile app developer, you’d typically utilize a [segmented control](https://developer.apple.com/design/human-interface-guidelines/ios/controls/segmented-controls/) on iOS.
 
-![iOS segmented control designs by Roman Kamushken](https://paper-attachments.dropbox.com/s_69D68D0C013F6B6DD2FC2754F85C28287ABF58C42A2FCD507A22BCD4DB9517BA_1582835174132_Designing+for+iPhone_+iOS+12+native+components+styles.png)
+![iOS segmented control designs by Roman Kamushken](../images/react-native-tab-control/ios-segmented-control-designs.png)
 
 
 On Android, you’d normally use [tab layouts](https://material.io/develop/android/components/tab-layout/) according to [Material Design guidelines](https://material.io/components/tabs/).
 
-![Example of a Material Tab Design.](https://paper-attachments.dropbox.com/s_69D68D0C013F6B6DD2FC2754F85C28287ABF58C42A2FCD507A22BCD4DB9517BA_1582836243054_adnroid-material-tab.png)
+![Example of a Material Tab Design.](../images/react-native-tab-control/material-design-tab.png)
 
 
 The goal of this article is to develop a [React Native](https://reactnative.dev/) component that renders a segmented control on iOS and a tab component on Android. When it comes to implementation, I reuse code for state management and data flow because they are platform-independent.
@@ -33,7 +33,7 @@ Platform-specific code — e.g., due to different UI patterns — is used with t
 
 The following animated gif demonstrates the tab control that is the subject of this article. You can find [this project on Github](https://github.com/doppelmutzi/react-native-tab-control) or as a publicly available [Expo project](https://expo.io/@doppelmutzi/snack-1205d81f-15ed-413d-9f4f-f7c4fd79aff1).
 
-![This demo shows how the component looks like on iOS and Android](https://paper-attachments.dropbox.com/s_69D68D0C013F6B6DD2FC2754F85C28287ABF58C42A2FCD507A22BCD4DB9517BA_1583331573757_demo.gif)
+![This demo shows how the component looks like on iOS and Android](../images/react-native-tab-control/demo.gif)
 
 
 I want to focus on the important aspects of developing such a component. For this reason, I have broken the example down to the essentials.
