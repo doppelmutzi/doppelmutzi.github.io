@@ -30,6 +30,8 @@ Platform-specific code — e.g., due to different UI patterns — is used with t
 - The iOS component design is strongly oriented towards iOS 13's design of segmented control. My template is Apple Maps on iOS 13
 - I do not attempt to implement different designs for different operating system versions (e.g., no iOS 12 design of segmented control for users with iOS 12)
 
+{% try to fix indent %}
+
 ## Demo app
 
 The following animated gif demonstrates the tab control that is the subject of this article. You can find [this project on Github](https://github.com/doppelmutzi/react-native-tab-control) or as a publicly available [Expo project](https://expo.io/@doppelmutzi/snack-1205d81f-15ed-413d-9f4f-f7c4fd79aff1).
@@ -683,11 +685,12 @@ Until recently, the React Native team offered a [segmented control component for
 
 At the time of this writing, the component only offers an iOS 12 design. [Nachos UI Kit](https://avocode.com/nachos-ui/docs/#!/Showcase/SegmentedControlButton) provides a rudimentary segmented control component. The following GitHub projects have implemented segmented control components, but it appears that some of these projects are no longer maintained:
 
-
 - [react-native-segmented-control-tab](https://github.com/kirankalyan5/react-native-segmented-control-tab)
 - [react-native-segmented-view](https://github.com/lelandrichardson/react-native-segmented-view)
 - [react-native-custom-segmented-control](https://github.com/wix/react-native-custom-segmented-control)
 - [react-native-segment-control](https://github.com/ainurb/react-native-segment-control)
+
+{% try to fix indent %}
 
 ## Conclusion
 
