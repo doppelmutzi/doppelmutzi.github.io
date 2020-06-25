@@ -29,6 +29,7 @@ Platform-specific code — e.g., due to different UI patterns — is used with t
 - The Android component meets Material Design guidelines
 - The iOS component design is strongly oriented towards iOS 13's design of segmented control. My template is Apple Maps on iOS 13
 - I do not attempt to implement different designs for different operating system versions (e.g., no iOS 12 design of segmented control for users with iOS 12)
+
 ## Demo app
 
 The following animated gif demonstrates the tab control that is the subject of this article. You can find [this project on Github](https://github.com/doppelmutzi/react-native-tab-control) or as a publicly available [Expo project](https://expo.io/@doppelmutzi/snack-1205d81f-15ed-413d-9f4f-f7c4fd79aff1).
@@ -687,6 +688,7 @@ At the time of this writing, the component only offers an iOS 12 design. [Nachos
 - [react-native-segmented-view](https://github.com/lelandrichardson/react-native-segmented-view)
 - [react-native-custom-segmented-control](https://github.com/wix/react-native-custom-segmented-control)
 - [react-native-segment-control](https://github.com/ainurb/react-native-segment-control)
+
 ## Conclusion
 
 As you can see, the more complex part is the iOS version of this component. Since I'm mainly an iOS user, I might have missed a few design concepts for the Android version. Let me know in the comments section if there is more work to do for a better Android user experience.
