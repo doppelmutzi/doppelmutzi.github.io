@@ -1,7 +1,9 @@
 ---
 layout: post
 title: Building a tab control component for iOS and Android with React Native
-canonical_url: 'https://blog.logrocket.com/tab-control-component-ios-android-react-native/'
+routes:
+  canonical: https://blog.logrocket.com/tab-control-component-ios-android-react-native/
+canonical_url: https://blog.logrocket.com/tab-control-component-ios-android-react-native/
 slug: react-native-tab-control
 date: 2020-06-25
 categories: react native, ux
