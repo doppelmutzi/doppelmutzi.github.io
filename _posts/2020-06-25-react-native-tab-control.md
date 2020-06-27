@@ -44,7 +44,8 @@ With respect to segmented control, I implemented a version using a motion animat
 
 You can find the code in [my Github project](https://github.com/doppelmutzi/expo-snack-RN-tab-control) or you can have quick access via my [Expo Snack](https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab-layout-on-android)).
 
-https://snack.expo.io/@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab-layout-on-android)
+<div data-snack-id="@doppelmutzi/tab-control-(segmented-control-on-ios-and-tab-layout-on-android)" data-snack-platform="web" data-snack-preview="true" data-snack-theme="light" style="overflow:hidden;background:#fafafa;border:1px solid rgba(0,0,0,.08);border-radius:4px;height:505px;width:100%"></div>
+<script async src="https://snack.expo.io/embed.js"></script>
 
 ## TabControl — interface and implementation
 
