@@ -1,12 +1,10 @@
 ---
 layout: post
 title: Building a tab control component for iOS and Android with React Native
-routes:
-  canonical: https://blog.logrocket.com/tab-control-component-ios-android-react-native/
-canonical_url: https://blog.logrocket.com/tab-control-component-ios-android-react-native/
 slug: react-native-tab-control
 date: 2020-06-25
 categories: react native, ux
+canonical_url: 'https://blog.logrocket.com/tab-control-component-ios-android-react-native'
 ---
 
 _Originally published at [blog.logrocket.com](https://blog.logrocket.com/tab-control-component-ios-android-react-native/)_
@@ -22,7 +20,6 @@ On Android, you’d normally use [tab layouts](https://material.io/develop/andro
 
 ![Example of a Material Tab Design.](../images/react-native-tab-control/material-design-tab.png)
 
-
 The goal of this article is to develop a [React Native](https://reactnative.dev/) component that renders a segmented control on iOS and a tab component on Android. When it comes to implementation, I reuse code for state management and data flow because they are platform-independent.
 
 Platform-specific code — e.g., due to different UI patterns — is used with the help of React Native mechanisms like the [Platform](https://reactnative.dev/docs/platform-specific-code#platform-module) module to distinguish between iOS and Android (as well as [Web](https://necolas.github.io/react-native-web/docs/?path=/docs/overview-getting-started--page)). My requirements on the component are:
@@ -32,7 +29,7 @@ Platform-specific code — e.g., due to different UI patterns — is used with t
 - The iOS component design is strongly oriented towards iOS 13's design of segmented control. My template is Apple Maps on iOS 13
 - I do not attempt to implement different designs for different operating system versions (e.g., no iOS 12 design of segmented control for users with iOS 12)
 
-{% try to fix indent %}
+{% comment %} try to fix indent {% endcomment %}
 
 ## Demo app
 
@@ -692,7 +689,7 @@ At the time of this writing, the component only offers an iOS 12 design. [Nachos
 - [react-native-custom-segmented-control](https://github.com/wix/react-native-custom-segmented-control)
 - [react-native-segment-control](https://github.com/ainurb/react-native-segment-control)
 
-{% try to fix indent %}
+{% comment %} try to fix indent {% endcomment %}
 
 ## Conclusion
 
