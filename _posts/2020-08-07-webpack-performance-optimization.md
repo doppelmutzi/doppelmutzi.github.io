@@ -40,7 +40,7 @@ Open `dist/static/app.js` and you can see for yourself that webpack has uglified
 
 If you check out the branch `use-production-mode`, you can see how the `app` bundle size increases when you set the mode to `development` because some optimizations are not performed.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
 +       mode: "development",
@@ -74,7 +74,7 @@ When you invoke `npm run build:analyze` then an interactive view opens on `http:
 
 Our initial version of the demo project consists of only one bundle named `app.js` because we only defined one single entry point.
 
-```JavaScript
+```javascript
 // webpack.prod.js
 const config = {
     mode: "production",
@@ -112,7 +112,7 @@ Instead of sending all our code in one large bundle to our users, our goal as fr
 
 Imagine that our user navigates directly to the profile page via the route `/profile`. We should serve only the code for this profile component. Next, we add another [entry point](https://webpack.js.org/concepts/entry-points/) that leads to a new bundle (check out out branch `entry-point-splitting`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         mode: "production",
@@ -128,7 +128,7 @@ The consequence is, of course, that you have to make sure the bundles are includ
 
 The good thing is that you can automate this composing step with the help of [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin).
 
-```JavaScript
+```javascript
 // webpack.prod.js
 plugins: [
     // ...
@@ -164,7 +164,7 @@ Run the build, and the generated `index.html` consists of the correct link and s
 
 To demonstrate how to generate multiple html files (for an MPA use case), check out the branch `entry-point-splitting-multiple-html`. The following setup generates an `index.html` and a `profile.html`.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     plugins: [
 -       new HtmlWebpackPlugin({
@@ -229,7 +229,7 @@ You can do this — and other code splitting techniques, as we will see in a min
 
 In order to use the aforementioned `SplitChunksPlugin`, we add [optimization.splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) to our config.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -262,7 +262,7 @@ Once again, this is webpack magic — [conventions/default values](https://webpa
 
 But the default behavior can be changed by the [splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#optimizationsplitchunks) options. We can set the [minSize option](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksminsize) to a value of 600KB and thereby tell webpack to first create a new vendor bundle if the dependencies it pulled out exceed this value (check out out the branch `vendor-splitting-tweaking`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -286,7 +286,7 @@ As you can see, Lodash is duplicated in the `profile.js` bundle, too (remember, 
  
 Of course, you could have more control if you wanted. Let’s assign a custom name, `node_vendors`. We define a [cacheGroup](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkscachegroups)s property for our vendors, which we pull out of the `node_modules` folder with the `test` property (check out the `vendor-splitting-cache-groups` branch). In the previous example, the default values of `splitChunks` contains `cacheGroups` out of the box.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -327,7 +327,7 @@ In our example, we combine vendor code splitting with common code splitting (che
 
 We add a new object with the key `common` to the `cacheGroups` object with a regex to target only modules in our `components` folder. Since the components of this demo project are very tiny, we need to override webpack’s default value of `minSize` — we set it to 0KB just in case.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -391,7 +391,7 @@ In order to use the [ES6 dynamic import syntax](https://github.com/tc39/proposal
 
 The implementation is pretty straightforward. First, we need a tiny wrapper around our `Profile` component that we want to lazy-load. 
 
-```JavaScript
+```javascript
 // ProfileLazy.js
 import loadable from "@loadable/component";
 export default loadable(() => import(/* webpackChunkName: "profile" */ "./Profile"));
@@ -401,7 +401,7 @@ We use the dynamic import inside the `loadable` callback and add a comment (to g
 
 In our `Blog` component, we just have to adjust the import for our `Router` component.
 
-```JavaScript
+```javascript
     // Blog.js
     import React from "react";
     import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -441,7 +441,7 @@ In our `Blog` component, we just have to adjust the import for our `Router` comp
 
 The last step is to delete the `profile` entry point that we used for entry point code splitting from both the `production` and `development` webpack config.
 
-```JavaScript
+```javascript
     // webpack.prod.js and webpack.dev.js
     const config = {
         // ...
@@ -498,7 +498,7 @@ Code splitting is also possible on a fine-grained level. Check out branch `code-
 
 In the demo project, we just add a button on the profile page to load and render a simple React component (`Paragraph`) on click.
 
-```JavaScript
+```javascript
     // Profile.js
 -   import React from "react";
 +   import React, { useState } from "react";
@@ -526,7 +526,7 @@ In the demo project, we just add a button on the profile page to load and render
 
 `ProfileLazy.js` looks familiar. We want to call the new bundle `paragraph.js`.
 
-```JavaScript
+```javascript
 // LazyParagraph.js
 import loadable from "@loadable/component";
 export default loadable(() => import(/* webpackChunkName: "paragraph" */ "./Paragraph"));
@@ -551,7 +551,7 @@ Once again, if you want to optimize browser caching, then it might be useful to 
 
 Anyway, check out branch `manifest-splitting`. The basis is our production configuration with two entry points and, now, vendor/common code splitting in place. In order to extract the manifest, we have to add the [runtimeChunk](https://webpack.js.org/guides/caching/#extracting-boilerplate) property.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         mode: "production",
@@ -618,7 +618,7 @@ This is the starting point (check out out branch `manifest-splitting`). We have 
 
 If we want to exclude React and React DOM from the production bundles, we have to add the following `externals` object to our production configuration (check out branch `externals`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...  
@@ -701,7 +701,7 @@ As also described in webpack’s tree shaking documentation, you have to make su
 ```
 The reason for this is that ES6 modules can be statically analyzed by webpack, whereas it is not possible with other variants, such as `require` by CommonJS. It is possible to dynamically change exports and do all kinds of [monkey patching](https://stackoverflow.com/a/42883538). You can also see an example in this project where `require` statements are created dynamically within a loop:
 
-```JavaScript
+```javascript
 // webpack.config.js
 // ...
 const addons = (/* string | string[] */ addonsArg) => {
@@ -714,7 +714,7 @@ If you want to see how it looks without tree shaking, you can disable the [Uglif
 
 Before we disable tree shaking, I first want to demonstrate the production build indeed removes unused code. Switch to the `master` branch and take a look at the following file:
 
-```JavaScript
+```javascript
 // util.js
 export function add(a, b) { // imported and used in Profile.js
     console.log("add");
@@ -729,7 +729,7 @@ Only the first function is used within `Profile.js`.  Execute `npm run build` ag
 
 Now switch to branch `disable-uglify`, where `minimize: false` is added to the configuration. 
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         mode: "production",  
@@ -760,7 +760,7 @@ As you can see in the last screenshot, webpack has [built-in support for perform
 
 We can define our own [performance budget](https://addyosmani.com/blog/performance-budgets/) for output assets. We don’t care for `development`, but we want to keep an eye on it for `production` (check out branch `performance-budget`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         mode: "production",
@@ -799,7 +799,7 @@ Let’s inspect our bundle to see how much size our popular Lodash dependency co
 
 That’s a pretty big chunk not only in absolute terms, but also in relation to the other components. This is how we use it.
 
-```JavaScript
+```javascript
 // Profile.js
 import _ from "lodash";
 // ...
@@ -815,7 +815,7 @@ The problem is that we pull in the whole library even we just use the `fill` fun
 
 We just need to change the import to pull in only the array functions (check out branch `lodash-modular`).
 
-```JavaScript
+```javascript
     // Profile.js
 -   import _ from "lodash";
 +   import _ from "lodash/array";
@@ -845,7 +845,7 @@ For production, `devtool: "source-map"` is a good choice because only a comment 
 
 For adding source maps, we just have to add one property to the production configuration (check out branch `sourcemaps`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         mode: "production",
@@ -881,7 +881,7 @@ With these filenames, however, we cannot invalidate browser-cached assets after 
 
 We can do better. We can use placeholder strings in different places of our webpack configuration — in the `filename` value, for example. We use `[hash]` to create a unique filename for an asset whenever we have made a change to the corresponding source files (check out branch `caching-hash`). We shouldn’t forget our CSS assets, either.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -907,7 +907,7 @@ Cool, we have fancy hash values as part of the filenames. But not so fast — we
 
 Let’s change `Profile.js` by adding a `console.log` statement and run the build again.
 
-```JavaScript
+```javascript
     // Profile.js
     const Profile = () => {
 +       console.log("hello world");
@@ -930,7 +930,7 @@ That’s because we have to use a different filename [substitution placeholder](
 
 It's not quite clear what the difference is between `chunkhash` and `contenthash`, though. Let’s try out `[chunkhash]` (check out branch `caching-chunkhash`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -956,7 +956,7 @@ Give it a shot and run the production build again!
 
 This looks a little better, but the hashes of a CSS asset match with its corresponding JS asset. Let’s change `Profile.js` and hope that the corresponding CSS filename won’t be updated.
 
-```JavaScript
+```javascript
     // Profile.js
     const Profile = () => {
 +       console.log("hello world again");
@@ -970,7 +970,7 @@ As we can see, it’s even worse. Not only does the profile CSS filename include
 
 Maybe `[contenthash]` helps? Let’s find out (check out branch `caching-contenthash`).
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
@@ -995,7 +995,7 @@ Each asset has been given a new but individual hash value.
 
 Did we make it? Let’s change something in `Profile.js` again and find out.
 
-```JavaScript
+```javascript
     // Profile.js
     const Profile = () => {
 +       console.log("Let's go");
@@ -1012,7 +1012,7 @@ The vendor bundle still has the same name. Since the `Profile` React component i
 
 A change in `Blog.js`, though, should only lead to a change of the `app` bundle name and not of the `profile` bundle name because the latter imports nothing from the former. 
 
-```JavaScript
+```javascript
     // Blog.js
     export default function Blog() {
 +       console.log("What's up?");
@@ -1032,7 +1032,7 @@ In addition, the [official webpack docs](https://webpack.js.org/guides/caching/)
 
 Check out branch `caching-moduleids` for the final version of our configuration.
 
-```JavaScript
+```javascript
     // webpack.prod.js
     const config = {
         // ...
