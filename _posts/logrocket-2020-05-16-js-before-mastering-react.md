@@ -6,7 +6,6 @@ slug: javascript-to-master-before-learning-react
 date: 2020-05-16
 categories: javascript, react
 canonical_url: 'https://blog.logrocket.com/javascript-concepts-before-learning-react/'
-
 ---
 
 As you likely already know, React is a library to create UI components that can be used as the basis of web and mobile applications. What distinguishes React from some of its competitors is that its code is written entirely with JavaScript. Even the HTML-like templates are written in JS using [JSX](https://facebook.github.io/jsx/), which is an extension of the JS language to structure UI components.
