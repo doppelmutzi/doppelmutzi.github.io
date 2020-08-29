@@ -5,6 +5,8 @@ title: JavaScript to master before learning React
 slug: react-eslint-prettier-vscode-2020
 date: 2020-05-16
 categories: javascript, react
+canonical_url: 'https://blog.logrocket.com/javascript-concepts-before-learning-react/'
+
 ---
 
 As you likely already know, React is a library to create UI components that can be used as the basis of web and mobile applications. What distinguishes React from some of its competitors is that its code is written entirely with JavaScript. Even the HTML-like templates are written in JS using [JSX](https://facebook.github.io/jsx/), which is an extension of the JS language to structure UI components.
@@ -12,6 +14,8 @@ As you likely already know, React is a library to create UI components that can 
 The goal of this article is to help aspiring React developers get started by highlighting the JavaScript they ought to master before really diving into React. A complete introduction to JavaScript would go beyond the scope of this article, but React builds on the use of modern JavaScript features that were mainly introduced with [ES2015](https://en.wikipedia.org/wiki/ECMAScript#6th_Edition_%E2%80%93_ECMAScript_2015).
 
 Below, I give an overview of the common JavaScript patterns and language features that are heavily used in virtually every React application. For each concept, I provide external links. If you are interested, you can learn more about using it in React context.
+
+_Originally published at [blog.logrocket.com](https://blog.logrocket.com/javascript-concepts-before-learning-react/)_
 
 ## Conditional logic with if statement, ternary operator, and logical operators
 
