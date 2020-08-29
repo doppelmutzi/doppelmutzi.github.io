@@ -3,7 +3,7 @@
 layout: post
 title: JavaScript to master before learning React
 slug: javascript-to-master-before-learning-react
-date: 2020-05-16
+date: 2020-08-29
 categories: javascript, react
 canonical_url: 'https://blog.logrocket.com/javascript-concepts-before-learning-react/'
 ---
