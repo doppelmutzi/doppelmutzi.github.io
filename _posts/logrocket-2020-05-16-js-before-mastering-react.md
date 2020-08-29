@@ -2,7 +2,7 @@
 ---
 layout: post
 title: JavaScript to master before learning React
-slug: react-eslint-prettier-vscode-2020
+slug: javascript-to-master-before-learning-react
 date: 2020-05-16
 categories: javascript, react
 canonical_url: 'https://blog.logrocket.com/javascript-concepts-before-learning-react/'
