@@ -8,7 +8,6 @@
 // @import "_main";
 // // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
-// @import "_highlights";
 @import "reset";
 @import "variables";
 // Syntax highlighting @import is at the bottom of this file
@@ -23,7 +22,7 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  font: 18px/1.4 $fontFamilyBody;
   color: $darkGray;
 }
 
@@ -35,11 +34,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: $fontFamily;
   color: $darkerGray;
   font-weight: bold;
 
-  line-height: 1.7;
+  line-height: 1.4;
   margin: 1em 0 15px;
   padding: 0;
 
@@ -198,7 +197,7 @@ img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: $fontFamily;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -217,7 +216,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: $fontFamily;
   font-size: 18px;
 
   @include mobile {
@@ -287,7 +286,18 @@ footer {
   text-align: center;
 }
 
+/* 
+How to change theme for code snippets
+http://sangsoonam.github.io/2019/01/20/syntax-highlighting-in-jekyll.html
+
+Overview javascript templates http://jwarby.github.io/jekyll-pygments-themes/languages/javascript.html
+
+copy template into _code-snippets.scss
+*/
+@import "code-snippets";
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
+
 @import "svg-icons";

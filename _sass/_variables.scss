@@ -16,8 +16,14 @@ $white: #fff;
 
 // Font stacks
 $helvetica: Helvetica, Arial, sans-serif;
-$helveticaNeue: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$fontFamily: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $georgia: Georgia, serif;
+$googleQuicksand: "Quicksand", sans-serif;
+$googleCode: 'Source Code Pro', monospace;
+
+$fontFamily: $googleQuicksand;
+$fontFamilyBody: $googleQuicksand;
+$fontFamilyCode: $googleCode;
 
 // Mobile breakpoints
 @mixin mobile {
