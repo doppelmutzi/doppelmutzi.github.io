@@ -7,11 +7,11 @@ categories: react native, ux
 canonical_url: 'https://blog.logrocket.com/tab-control-component-ios-android-react-native'
 ---
 
-_Originally published at [blog.logrocket.com](https://blog.logrocket.com/tab-control-component-ios-android-react-native/)_
-
 A tab control is a crucial component for mobile apps. It enables users to navigate between screens or makes different portions of on-screen content accessible by switching between views.
 
 As a mobile app developer, you’d typically utilize a [segmented control](https://developer.apple.com/design/human-interface-guidelines/ios/controls/segmented-controls/) on iOS.
+
+_Originally published at [blog.logrocket.com](https://blog.logrocket.com/tab-control-component-ios-android-react-native/)_
 
 ![iOS segmented control designs by Roman Kamushken](../images/react-native-tab-control/ios-segmented-control-designs.png)
 

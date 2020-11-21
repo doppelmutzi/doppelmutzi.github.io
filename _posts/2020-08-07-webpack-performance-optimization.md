@@ -7,11 +7,11 @@ categories: webpack, performance, code splitting
 canonical_url: 'https://blog.logrocket.com/guide-performance-optimization-webpack/'
 ---
 
-_Originally published at [blog.logrocket.com](https://blog.logrocket.com/guide-performance-optimization-webpack/)_
-
 These days, you have to use a modern [module bundler](https://lihautan.com/what-is-module-bundler-and-how-does-it-work/) such as [webpack](https://webpack.js.org/) to benefit from a development workflow that utilizes state-of-the-art performance optimization concepts. Module bundlers are built by brilliant people just to help you with these difficult tasks.
 
 In addition, I recommend using a [starter kit](https://webpack.js.org/starter-kits/) or starting with a modern boilerplate project to have webpack configuration best practices in place. Building on this, you can make project-specific adjustments. I like [this React + webpack 4 boilerplate project](https://github.com/esausilva/react-starter-boilerplate-hmr), which is also the basis of this blog’s [accompanying demo project](https://github.com/doppelmutzi/react-performance-strategies).
+
+_Originally published at [blog.logrocket.com](https://blog.logrocket.com/guide-performance-optimization-webpack/)_
 
 webpack 4 comes with appropriate presets. However, you have to understand a fair number of concepts to reap their performance benefits. Furthermore, the possibilities to tweak webpack’s configuration are endless, and you need extensive knowhow to do it the right way for your project.
 
