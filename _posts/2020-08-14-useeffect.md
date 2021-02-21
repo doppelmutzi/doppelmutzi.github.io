@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The useEffect Hook explained crystal clear
+title: The last guide to the useEffect Hook you’ll ever need
 slug: useEffect
 date: 2021-02-21
 categories: react
