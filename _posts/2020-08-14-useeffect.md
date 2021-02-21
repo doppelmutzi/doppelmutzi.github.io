@@ -7,7 +7,6 @@ categories: react
 canonical_url: https://blog.logrocket.com/guide-to-react-useeffect-hook/
 ---
 
-# The `useEffect` Hook explained crystal clear
 Understanding how the `useEffect` [Hook works](https://blog.logrocket.com/react-reference-guide-hooks-api/#useeffect) is one of the most important concepts for mastering React today. If you have been working with React for several years, it is especially crucial to understand how working with `useEffect` differs from working with the lifecycle methods of class-based component. In fact, it is a wholesale shift in mindset!
 
 _Originally published at [blog.logrocket.com](https://blog.logrocket.com/guide-to-react-useeffect-hook/)_
